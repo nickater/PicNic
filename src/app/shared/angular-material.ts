@@ -14,7 +14,6 @@ import {
   MatDatepickerModule,
   MatFormFieldModule,
   MatSliderModule,
-  MatSpinner,
   MatProgressSpinnerModule,
   MatExpansionModule,
   MatDialogModule,
@@ -54,8 +53,7 @@ import { MatInputModule } from '@angular/material/input';
     MatDialogModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatStepperModule,
-    MatSpinner
+    MatStepperModule
   ],
   exports: [
     BrowserAnimationsModule,
@@ -82,8 +80,7 @@ import { MatInputModule } from '@angular/material/input';
     MatDialogModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatStepperModule,
-    MatSpinner
+    MatStepperModule
   ]
 })
 export class MaterialModule {}
