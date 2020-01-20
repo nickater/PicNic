@@ -1,0 +1,19 @@
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stick {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.home {
+  font-size: 1.5em;
+}
+
+button i {
+  font-size: 2.5em;
+}

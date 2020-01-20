@@ -6,15 +6,10 @@ import { UpdateFoodComponent } from './update-food/update-food.component';
 import { DeleteFoodComponent } from './delete-food/delete-food.component';
 
 const childRoutes: Routes = [
-  {
-    path: 'food',
-    children: [
-      { path: '', component: ListFoodComponent },
-      { path: 'create', component: CreateFoodComponent },
-      { path: 'update', component: UpdateFoodComponent },
-      { path: 'delete', component: DeleteFoodComponent }
-    ]
-  }
+  { path: '', component: ListFoodComponent },
+  { path: 'create', component: CreateFoodComponent },
+  { path: 'update', component: UpdateFoodComponent },
+  { path: 'delete', component: DeleteFoodComponent }
 ];
 @NgModule({
   imports: [RouterModule.forChild(childRoutes)],

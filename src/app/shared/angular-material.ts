@@ -1,4 +1,3 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,12 +14,14 @@ import {
   MatFormFieldModule,
   MatSliderModule,
   MatProgressSpinnerModule,
-  MatExpansionModule,
   MatDialogModule,
   MatSelectModule,
   MatSlideToggleModule,
-  MatStepperModule
+  MatStepperModule,
+  MatNativeDateModule,
+  MatRadioModule
 } from '@angular/material';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { NgModule } from '@angular/core';
@@ -29,7 +30,6 @@ import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
     LayoutModule,
@@ -53,10 +53,16 @@ import { MatInputModule } from '@angular/material/input';
     MatDialogModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatStepperModule
+    MatStepperModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatRadioModule
   ],
   exports: [
-    BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
     LayoutModule,
@@ -80,7 +86,15 @@ import { MatInputModule } from '@angular/material/input';
     MatDialogModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatStepperModule
+    MatStepperModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatRadioModule,
+    MatExpansionModule
   ]
 })
 export class MaterialModule {}

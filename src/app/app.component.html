@@ -1,1 +1,31 @@
+<mat-toolbar color="primary" class="stick">
+  <button class="home" mat-button routerLink="">PicNic</button>
+  <h1 *ngIf="groupService.groupId != null" class="mat-h1">
+    The {{ groupService.groupId | titlecase }} Group
+  </h1>
+  <div class="menu">
+    <button mat-button [matMenuTriggerFor]="beforeMenu">
+      <i class="material-icons">
+        fastfood
+      </i>
+    </button>
+    <mat-menu #beforeMenu="matMenu" xPosition="before" yPosition="below">
+      <div *ngIf="!auth.user$; else loggedIn">
+        <button mat-menu-item routerLink="/login">Sign In</button>
+        <button mat-menu-item routerLink="/register">
+          Register
+        </button>
+      </div>
+      <ng-template #loggedIn>
+        <button mat-menu-item routerLink="/profile">Profile</button>
+        <button mat-menu-item routerLink="/group">Group</button>
+        <button mat-menu-item routerLink="/events">Events</button>
+        <button mat-menu-item routerLink="/food">Food</button>
+        <button mat-menu-item (click)="auth.logout()" routerLink="/">
+          Logout
+        </button>
+      </ng-template>
+    </mat-menu>
+  </div>
+</mat-toolbar>
 <router-outlet></router-outlet>

@@ -6,15 +6,10 @@ import { UpdateGroupComponent } from './update-group/update-group.component';
 import { DeleteGroupComponent } from './delete-group/delete-group.component';
 
 const childRoutes: Routes = [
-  {
-    path: 'group',
-    children: [
-      { path: '', component: ListGroupComponent },
-      { path: 'create', component: CreateGroupComponent },
-      { path: 'update', component: UpdateGroupComponent },
-      { path: 'delete', component: DeleteGroupComponent }
-    ]
-  }
+  { path: '', component: ListGroupComponent },
+  { path: 'create', component: CreateGroupComponent },
+  { path: 'update', component: UpdateGroupComponent },
+  { path: 'delete', component: DeleteGroupComponent }
 ];
 
 @NgModule({

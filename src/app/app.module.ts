@@ -8,20 +8,24 @@ import { UserRegistrationComponent } from './home/registration/user-registration
 import { MaterialModule } from './shared/angular-material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFirebaseModule } from './shared/angular-fire.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     UserLoginComponent,
-    UserRegistrationComponent
+    UserRegistrationComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    AngularFirebaseModule
+    AngularFirebaseModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

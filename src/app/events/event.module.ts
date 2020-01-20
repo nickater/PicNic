@@ -4,7 +4,7 @@ import { CreateEventComponent } from './create-event/create-event.component';
 import { ListEventsComponent } from './list-events/list-events.component';
 import { UpdateEventComponent } from './update-event/update-event.component';
 import { DeleteEventComponent } from './delete-event/delete-event.component';
-import { Routes, RouterModule } from '@angular/router';
+import { EventRoutingModule } from './event-routing.module';
 
 @NgModule({
   declarations: [
@@ -13,8 +13,6 @@ import { Routes, RouterModule } from '@angular/router';
     UpdateEventComponent,
     DeleteEventComponent
   ],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule, EventRoutingModule]
 })
-export class EventModule { }
+export class EventModule {}

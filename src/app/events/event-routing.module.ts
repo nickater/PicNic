@@ -6,15 +6,10 @@ import { UpdateEventComponent } from './update-event/update-event.component';
 import { DeleteEventComponent } from './delete-event/delete-event.component';
 
 const childRoutes: Routes = [
-  {
-    path: 'events',
-    children: [
-      { path: '', component: ListEventsComponent },
-      { path: 'create', component: CreateEventComponent },
-      { path: 'update/:id', component: UpdateEventComponent },
-      { path: 'delete', component: DeleteEventComponent }
-    ]
-  }
+  { path: '', component: ListEventsComponent },
+  { path: 'create', component: CreateEventComponent },
+  { path: 'update/:id', component: UpdateEventComponent },
+  { path: 'delete', component: DeleteEventComponent }
 ];
 @NgModule({
   declarations: [],
