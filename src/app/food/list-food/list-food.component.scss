@@ -1,0 +1,47 @@
+.container {
+  padding: 40px 10% 0px 10%;
+  display: flex;
+  justify-content: center;
+}
+
+mat-toolbar {
+  font-weight: bold;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  font-size: xx-large;
+}
+
+mat-expansion-panel {
+  width: 72vw;
+}
+
+mat-expansion-panel-header {
+  height: 100px;
+}
+
+.mat-expansion-panel-header-description {
+  flex-grow: 1;
+}
+
+.expanded-panel {
+  display: flex;
+}
+
+mat-panel-description {
+  width: 20%;
+}
+
+mat-panel-title {
+  width: 20%;
+}
+
+button {
+  position: fixed;
+  top: 10.5vh;
+  left: 2%;
+  height: 40px;
+  width: 40px;
+  border-radius: 40px;
+  background-color: floralwhite;
+}

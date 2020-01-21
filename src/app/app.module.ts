@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFirebaseModule } from './shared/angular-fire.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
     UserProfileComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
