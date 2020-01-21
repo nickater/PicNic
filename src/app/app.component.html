@@ -1,8 +1,10 @@
 <mat-toolbar color="primary" class="stick">
   <button class="home" mat-button routerLink="">PicNic</button>
-  <h1 *ngIf="groupService.groupId != null" class="mat-h1">
-    The {{ groupService.groupId | titlecase }} Group
-  </h1>
+  <div *ngIf="auth.user$">
+    <h1 *ngIf="groupService.groupId != null" class="mat-h1">
+      The {{ groupService.groupId | titlecase }} Group
+    </h1>
+  </div>
   <div class="menu">
     <button mat-button [matMenuTriggerFor]="beforeMenu">
       <i class="material-icons">

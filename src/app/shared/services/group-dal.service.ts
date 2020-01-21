@@ -11,12 +11,11 @@ import { Group } from 'src/app/models/group';
 })
 export class GroupDALService {
   group: Observable<any>;
-  constructor(public afs: AngularFirestore) {
-    this.group = this.getGroupById(this.groupId);
-  }
+  constructor(public afs: AngularFirestore) {}
 
   storeGroupId(groupId: string) {
     localStorage.setItem('groupId', groupId);
+    this.group = this.getGroupById(this.groupId);
   }
 
   getGroupById(groupId: string): Observable<any> {
