@@ -1,0 +1,24 @@
+<div class="container">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let user of group">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ user.firstName | titlecase }} {{ user.lastName | titlecase }}
+        </mat-panel-title>
+        <mat-panel-description>
+          Events Attended: 0
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="expanded-panel">
+        <mat-panel-description class="birthday">
+          {{ user.birthday.toDate() | date }}
+        </mat-panel-description>
+
+        <mat-panel-description>
+          Portion: {{ user.portion }}
+        </mat-panel-description>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

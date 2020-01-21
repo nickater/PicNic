@@ -1,0 +1,47 @@
+html {
+  background-color: #506ad8;
+  background-image: linear-gradient(
+    329deg,
+    #506ad8 0%,
+    #6284ff 50%,
+    #673bb7 100%
+  );
+}
+
+.welcome-sign {
+  height: 80vh;
+  display: flex;
+  justify-content: space-around;
+}
+
+.welcome-sign > div {
+  position: relative;
+  top: 8em;
+}
+
+.welcome-sign h2.mat-display-4 {
+  color: floralwhite;
+  display: flex;
+  justify-content: space-around;
+}
+
+.welcome-sign p.mat-display-1 {
+  color: floralwhite;
+  display: flex;
+  justify-content: space-around;
+}
+
+@media screen and (max-width: 930px) {
+  .welcome-sign h2.mat-display-4 {
+    color: floralwhite;
+    display: flex;
+    justify-content: space-around;
+    font-size: xxx-large;
+  }
+  .welcome-sign p.mat-display-1 {
+    color: floralwhite;
+    display: flex;
+    justify-content: space-around;
+    font-size: x-large;
+  }
+}

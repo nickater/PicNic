@@ -1,0 +1,31 @@
+<div class="container" *ngIf="foodCount > 0; else noFood">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let item of food">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ item.name | titlecase }}
+        </mat-panel-title>
+        <mat-panel-description>
+          Last Cooked: {{ item.lastUsed.toDate() | date }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="expanded-panel">
+        <mat-list>
+          <mat-list-item *ngFor="let ing of item.ingredients">
+            {{ ing.quantity }} {{ ing.unit }} of {{ ing.name }}
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <button mat-button (click)="openAddFoodModal()">
+    <i class="material-icons">
+      add
+    </i>
+  </button>
+</div>
+<ng-template #noFood>
+  <mat-toolbar>
+    There's no food here!
+  </mat-toolbar>
+</ng-template>
