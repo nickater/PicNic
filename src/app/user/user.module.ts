@@ -5,8 +5,6 @@ import { UpdateUserComponent } from './update-user/update-user.component';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 
-
-
 @NgModule({
   declarations: [
     UserProfileComponent,
@@ -14,8 +12,6 @@ import { CreateUserComponent } from './create-user/create-user.component';
     DeleteUserComponent,
     CreateUserComponent
   ],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule]
 })
-export class UserModule { }
+export class UserModule {}

@@ -6,15 +6,10 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
 
 const childRoutes: Routes = [
-  {
-    path: 'user',
-    children: [
-      { path: '', component: UserProfileComponent },
-      { path: 'update', component: UpdateUserComponent },
-      { path: 'create', component: CreateUserComponent },
-      { path: 'delete', component: DeleteUserComponent }
-    ]
-  }
+  { path: '', component: UserProfileComponent },
+  { path: 'update', component: UpdateUserComponent },
+  { path: 'create', component: CreateUserComponent },
+  { path: 'delete', component: DeleteUserComponent }
 ];
 @NgModule({
   imports: [RouterModule.forChild(childRoutes)],
