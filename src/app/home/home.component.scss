@@ -45,3 +45,19 @@ html {
     font-size: x-large;
   }
 }
+
+@media screen and (max-width: 450px) {
+  .welcome-sign h2.mat-display-4 {
+    color: floralwhite;
+    display: flex;
+    justify-content: space-around;
+    font-size: xx-large;
+    margin-bottom: 20px;
+  }
+  .welcome-sign p.mat-display-1 {
+    color: floralwhite;
+    display: flex;
+    justify-content: space-around;
+    font-size: large;
+  }
+}

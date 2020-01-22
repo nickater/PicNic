@@ -1,1 +1,93 @@
-<p>update-food works!</p>
+<mat-card class="modal-content">
+  <form [formGroup]="editFoodForm" (ngSubmit)="submitHandler()">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Add a Food</mat-card-title>
+    </mat-card-header>
+    <mat-card-subtitle
+      >Please input food based off of single portions</mat-card-subtitle
+    >
+    <hr />
+    <div>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Food name"
+          formControlName="name"
+          required
+        />
+      </mat-form-field>
+    </div>
+    <div
+      formArrayName="ingredients"
+      *ngFor="let ingredient of ingredientForms.controls; let i = index"
+    >
+      <div>
+        <div [formGroupName]="i">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Ingredient Name"
+              formControlName="name"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Quantity"
+              formControlName="quantity"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Unit</mat-label>
+            <mat-select formControlName="unit" required>
+              <mat-option
+                *ngFor="let item of measurements"
+                [value]="item.shortName"
+              >
+                {{ item.shortName }}
+              </mat-option>
+              <mat-option (click)="addNewUnit()" class="blue">
+                <i class="material-icons">add</i>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <button mat-raised-button color="warn" (click)="deleteIngredient(i)">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [mat-dialog-close]="data"
+        [disabled]="!editFoodForm.valid"
+      >
+        SAVE
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="addIngredientButtonClick()"
+      >
+        Add Ingredient
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        type="button"
+        (click)="cancelHandler()"
+      >
+        CANCEL
+      </button>
+    </mat-card-actions>
+  </form>
+  <app-create-measurement></app-create-measurement>
+</mat-card>

@@ -1,5 +1,5 @@
 .container {
-  padding: 100px 10% 0px 10%;
+  padding: 10px 10% 15px 10%;
 }
 
 mat-toolbar {
@@ -8,6 +8,7 @@ mat-toolbar {
   margin-bottom: 20px;
   border-radius: 6px;
   font-size: xx-large;
+  z-index: 1;
 }
 
 mat-expansion-panel-header {

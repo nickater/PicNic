@@ -7,13 +7,15 @@ import { DeleteFoodComponent } from './delete-food/delete-food.component';
 import { FoodRoutingModule } from './food-routing.module';
 import { MaterialModule } from '../shared/angular-material';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CreateMeasurementComponent } from './measurement/create-measurement/create-measurement.component';
 
 @NgModule({
   declarations: [
     CreateFoodComponent,
     ListFoodComponent,
     UpdateFoodComponent,
-    DeleteFoodComponent
+    DeleteFoodComponent,
+    CreateMeasurementComponent
   ],
   imports: [
     CommonModule,

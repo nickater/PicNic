@@ -1,25 +1,68 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
 import { Measurement } from 'src/app/models/measurement';
+import { GroupDALService } from './group-dal.service';
+import { of, concat, Observable, combineLatest } from 'rxjs';
+import { mergeMap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MeasurementDalService {
-  measurements: Observable<any>;
+  privateMeasurements: Observable<any>;
+  publicMeasurements: Observable<any>;
+  allMeasurements: Observable<any>;
 
-  constructor(public afs: AngularFirestore) {
-    this.measurements = this.afs
-      .collection('measurements')
-      .valueChanges({ idField: 'id' });
+  collection = this.afs
+    .collection('groups')
+    .doc(this.groupService.groupId)
+    .collection('measurements');
+
+  constructor(
+    private afs: AngularFirestore,
+    private groupService: GroupDALService
+  ) {
+    this.getPrivateMeasurements();
+    this.getPublicMeasurements();
+    this.allMeasurements = combineLatest(
+      this.privateMeasurements,
+      this.publicMeasurements
+    );
   }
 
-  getMeasurements() {
-    return this.measurements;
+  getPrivateMeasurements() {
+    this.privateMeasurements = this.collection.valueChanges();
+    console.log(this.privateMeasurements);
+  }
+
+  getPublicMeasurements() {
+    this.publicMeasurements = this.afs
+      .collection('measurements')
+      .valueChanges();
+    console.log(this.publicMeasurements);
+  }
+
+  mapMeasurements(measurements) {
+    let allMeasurements = [];
+    if (measurements instanceof Array) {
+      measurements.forEach((element) => {
+        if (element instanceof Array) {
+          element.forEach((subElement) => {
+            allMeasurements.push(subElement);
+          });
+        } else {
+          allMeasurements.push(element);
+        }
+      });
+    }
+    return allMeasurements;
   }
 
   addMeasurement(measurement: Measurement) {
-    this.afs.collection('measurements').add(measurement);
+    this.afs
+      .collection('groups')
+      .doc(this.groupService.groupId)
+      .collection('measurements')
+      .add(measurement);
   }
 }

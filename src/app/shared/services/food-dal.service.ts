@@ -22,7 +22,7 @@ export class FoodDALService {
     this.food = this.collection.valueChanges({ idField: 'id' });
   }
 
-  getFood() {
+  getAllFood() {
     return this.food;
   }
 

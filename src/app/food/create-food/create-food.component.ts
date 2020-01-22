@@ -4,6 +4,7 @@ import { Measurement } from '../../models/measurement';
 import { MatDialogRef } from '@angular/material';
 import { FoodDALService } from 'src/app/shared/services/food-dal.service';
 import { MeasurementDalService } from 'src/app/shared/services/measurement-dal.service';
+import { async } from '@angular/core/testing';
 @Component({
   selector: 'app-create-food',
   templateUrl: './create-food.component.html',
@@ -11,7 +12,7 @@ import { MeasurementDalService } from 'src/app/shared/services/measurement-dal.s
 })
 export class CreateFoodComponent implements OnInit {
   addFoodForm: FormGroup;
-  measurements: Measurement[] = [];
+  measurements: any = [];
 
   constructor(
     private foodService: FoodDALService,
@@ -26,9 +27,8 @@ export class CreateFoodComponent implements OnInit {
       description: '',
       ingredients: this.fb.array([this.addIngredientGroup()])
     });
-
-    this.measurementService.getMeasurements().subscribe((measurements) => {
-      this.measurements = measurements;
+    this.measurementService.allMeasurements.subscribe((res) => {
+      this.measurements = this.measurementService.mapMeasurements(res);
     });
   }
 
