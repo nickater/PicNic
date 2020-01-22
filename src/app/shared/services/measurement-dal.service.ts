@@ -43,7 +43,7 @@ export class MeasurementDalService {
   }
 
   mapMeasurements(measurements) {
-    let allMeasurements = [];
+    const allMeasurements = [];
     if (measurements instanceof Array) {
       measurements.forEach((element) => {
         if (element instanceof Array) {
