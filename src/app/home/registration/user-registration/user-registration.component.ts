@@ -50,6 +50,7 @@ export class UserRegistrationComponent implements OnInit {
 
   convertFormToObject(formValue, uId) {
     formValue = this.removePasswordFromObject(formValue);
+
     return {
       ...formValue,
       id: uId
@@ -62,11 +63,16 @@ export class UserRegistrationComponent implements OnInit {
     return user;
   }
 
+  setGroupIdToLowerCase() {
+    this.registrationForm.value.groupId = this.registrationForm.value.groupId.toLowerCase();
+  }
+
   storeGroupId(groupId: string) {
     return (this.groupService.groupId = groupId);
   }
 
   onSubmit() {
+    this.setGroupIdToLowerCase();
     this.storeGroupId(this.registrationForm.value.groupId);
     this.userService.addUserToAuth(this.registrationForm.value).then((res) => {
       const combinedUser = this.convertFormToObject(

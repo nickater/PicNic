@@ -5,9 +5,14 @@
         <mat-panel-title>
           {{ item.name | titlecase }}
         </mat-panel-title>
-        <mat-panel-description>
+        <mat-panel-description *ngIf="item.lastUsed; else neverUsed">
           Last Cooked: {{ item.lastUsed.toDate() | date }}
         </mat-panel-description>
+        <ng-template #neverUsed>
+          <mat-panel-description>
+            Last Cooked: Never
+          </mat-panel-description>
+        </ng-template>
       </mat-expansion-panel-header>
       <div class="expanded-panel">
         <mat-list>
@@ -40,4 +45,14 @@
   <mat-toolbar>
     There's no food here!
   </mat-toolbar>
+  <button
+    class="add"
+    mat-raised-button
+    color="accent"
+    (click)="openAddFoodModal()"
+  >
+    <i class="material-icons">
+      add
+    </i>
+  </button>
 </ng-template>

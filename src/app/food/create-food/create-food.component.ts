@@ -24,6 +24,8 @@ export class CreateFoodComponent implements OnInit {
   ngOnInit() {
     this.addFoodForm = this.fb.group({
       name: '',
+      dateAdded: new Date(),
+      lastUsed: null,
       description: '',
       ingredients: this.fb.array([this.addIngredientGroup()])
     });
