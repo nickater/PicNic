@@ -43,7 +43,7 @@ export class UserRegistrationComponent implements OnInit {
 
   checkPasswordsMatch() {
     this.passwordsMatch =
-      this.registrationForm.value.password ==
+      this.registrationForm.value.password ===
       this.registrationForm.value.confirmPass;
     return this.passwordsMatch;
   }
@@ -69,7 +69,7 @@ export class UserRegistrationComponent implements OnInit {
   onSubmit() {
     this.storeGroupId(this.registrationForm.value.groupId);
     this.userService.addUserToAuth(this.registrationForm.value).then((res) => {
-      let combinedUser = this.convertFormToObject(
+      const combinedUser = this.convertFormToObject(
         this.registrationForm.value,
         res.user.uid
       );
