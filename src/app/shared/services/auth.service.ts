@@ -6,6 +6,7 @@ import { switchMap, first } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
 import { GroupDALService } from './group-dal.service';
 import { UserDalService } from './user-dal.service';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,15 @@ export class AuthService {
       user.email,
       user.password
     );
+  }
+
+  setPersistence() {
+    this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+  }
+
+  async googleLogin() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const credential = await this.afAuth.auth.signInWithPopup(provider);
   }
 
   logout() {

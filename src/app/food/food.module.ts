@@ -15,6 +15,7 @@ import { CreateMeasurementComponent } from './measurement/create-measurement/cre
     ListFoodComponent,
     UpdateFoodComponent,
     DeleteFoodComponent,
+    CreateMeasurementComponent,
     CreateMeasurementComponent
   ],
   imports: [
