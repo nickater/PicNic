@@ -9,14 +9,14 @@ html {
 }
 
 .welcome-sign {
-  height: 80vh;
+  height: auto;
   display: flex;
   justify-content: space-around;
 }
 
 .welcome-sign > div {
   position: relative;
-  top: 8em;
+  top: 4em;
 }
 
 .welcome-sign h2.mat-display-4 {
