@@ -1,1 +1,8 @@
-<h1>list-events works!</h1>
+<mat-tab-group dynamicHeight class="tab-group">
+  <mat-tab label="Upcoming">
+    <app-upcoming-events events="upcomingEvents"></app-upcoming-events>
+  </mat-tab>
+  <mat-tab label="Past">
+    <app-past-events events="pastEvents"></app-past-events>
+  </mat-tab>
+</mat-tab-group>

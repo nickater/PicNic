@@ -19,7 +19,8 @@ import {
   MatSlideToggleModule,
   MatStepperModule,
   MatNativeDateModule,
-  MatRadioModule
+  MatRadioModule,
+  MatTabsModule
 } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -60,7 +61,8 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatCheckboxModule,
     MatChipsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTabsModule
   ],
   exports: [
     MatButtonModule,
@@ -94,7 +96,8 @@ import { MatInputModule } from '@angular/material/input';
     MatCheckboxModule,
     MatChipsModule,
     MatRadioModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTabsModule
   ]
 })
 export class MaterialModule {}

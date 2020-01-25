@@ -1,1 +1,11 @@
-<p>create-event works!</p>
+<div class="container">
+  <mat-card>
+    <form [formGroup]="createEventForm" (ngSubmit)="onSumbit()">
+      <mat-card-title>Add Event</mat-card-title>
+      <mat-card-content> </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button>SAVE</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
