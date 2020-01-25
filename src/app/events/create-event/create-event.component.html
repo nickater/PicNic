@@ -2,7 +2,11 @@
   <mat-card>
     <form [formGroup]="createEventForm" (ngSubmit)="onSumbit()">
       <mat-card-title>Add Event</mat-card-title>
-      <mat-card-content> </mat-card-content>
+      <mat-card-content>
+        <mat-form-field>
+          <input matInput formControlName placeholder="Event Name">
+        </mat-form-field>  
+      </mat-card-content>
       <mat-card-actions>
         <button mat-raised-button>SAVE</button>
       </mat-card-actions>

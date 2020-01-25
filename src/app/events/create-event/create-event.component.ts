@@ -1,22 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { EventDalService } from 'src/app/shared/services/event-dal.service';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, FormArray } from "@angular/forms";
+import { EventDalService } from "src/app/shared/services/event-dal.service";
 
 @Component({
-  selector: 'app-create-event',
-  templateUrl: './create-event.component.html',
-  styleUrls: ['./create-event.component.scss']
+  selector: "app-create-event",
+  templateUrl: "./create-event.component.html",
+  styleUrls: ["./create-event.component.scss"]
 })
 export class CreateEventComponent implements OnInit {
-  addEventForm: FormGroup;
+  createEventForm: FormGroup;
 
   constructor(private eventService: EventDalService, private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.addEventForm = this.fb.group({});
+    this.createEventForm = this.fb.group({
+      name: "",
+      startDate: null,
+      endDate: null,
+      plannedMeals: this.fb.array([
+        {
+          dayNumber: 0,
+          meals: this.fb.array([
+            {
+              mealTime: "",
+              food: this.fb.array([])
+            }
+          ])
+        }
+      ]),
+      attendees: this.fb.array([])
+    });
   }
 
   onSumbit() {
-    this.eventService.createEvent(this.addEventForm.value);
+    this.eventService.createEvent(this.createEventForm.value);
   }
 }
