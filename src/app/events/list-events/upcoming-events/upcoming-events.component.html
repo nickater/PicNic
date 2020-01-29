@@ -1,21 +1,15 @@
-<div class="container" *ngIf="eventCount > 0; else noEvent">
+<div class="container" *ngIf="!noEvents; else noEvent">
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let item of events">
+    <mat-expansion-panel *ngFor="let item of upcomingEvents | async">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ item.name | titlecase }}
         </mat-panel-title>
-        <ng-template #neverUsed>
-          <mat-panel-description>
-            Date: {{ item.startDate }}
-          </mat-panel-description>
-        </ng-template>
+        <mat-panel-description>
+          {{ item.startDate.toDate() | date }}
+        </mat-panel-description>
       </mat-expansion-panel-header>
-      <div class="expanded-panel">
-        <mat-list>
-          <mat-list-item *ngFor=""> </mat-list-item>
-        </mat-list>
-      </div>
+      <div class="expanded-panel"></div>
       <div class="edit">
         <button mat-mini-fab>
           <i class="material-icons">
@@ -25,7 +19,7 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <button class="add" mat-raised-button color="accent">
+  <button class="add" mat-raised-button color="accent" routerLink="create">
     <i class="material-icons">
       add
     </i>
@@ -36,7 +30,7 @@
     Add some events!
   </mat-toolbar>
   <button class="add" mat-raised-button>
-    <i class="material-icons">
+    <i routerLink="create" class="material-icons">
       add
     </i>
   </button>

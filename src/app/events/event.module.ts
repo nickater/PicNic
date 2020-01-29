@@ -9,7 +9,9 @@ import { UpcomingEventsComponent } from './list-events/upcoming-events/upcoming-
 import { PastEventsComponent } from './list-events/past-events/past-events.component';
 import { MaterialModule } from '../shared/angular-material';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { AddFoodToEventComponent } from './add-food-to-event/add-food-to-event.component';
+import { DeleteFoodFromEventComponent } from './delete-food-from-event/delete-food-from-event.component';
+import { MomentModule } from 'ngx-moment';
 @NgModule({
   declarations: [
     CreateEventComponent,
@@ -17,13 +19,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     UpdateEventComponent,
     DeleteEventComponent,
     UpcomingEventsComponent,
-    PastEventsComponent
+    PastEventsComponent,
+    AddFoodToEventComponent,
+    DeleteFoodFromEventComponent
   ],
   imports: [
     CommonModule,
     EventRoutingModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MomentModule
   ]
 })
 export class EventModule {}

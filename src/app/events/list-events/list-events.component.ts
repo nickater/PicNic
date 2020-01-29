@@ -17,6 +17,6 @@ export class ListEventsComponent implements OnInit {
   constructor(private eventDal: EventDalService) {}
 
   ngOnInit() {
-    this.allEvents = this.eventDal.getUpcomingEvents().valueChanges();
+    this.upcomingEvents = this.eventDal.getUpcomingEvents();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Food } from 'src/app/models/food';
 import { FoodDALService } from 'src/app/shared/services/food-dal.service';
@@ -13,12 +13,12 @@ import { UpdateFoodComponent } from '../update-food/update-food.component';
   templateUrl: './list-food.component.html',
   styleUrls: ['./list-food.component.scss']
 })
-export class ListFoodComponent implements OnInit {
+export class ListFoodComponent implements OnInit, OnDestroy {
   food: Food[];
   foodCount: number;
   measurements: any;
   foodAndMeasurements: {};
-
+  subscription;
   constructor(
     private dialog: MatDialog,
     private foodService: FoodDALService,
@@ -26,11 +26,15 @@ export class ListFoodComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.foodService.getAllFood().subscribe((res) => {
+    this.subscription = this.foodService.getAllFood().subscribe((res) => {
       this.food = res;
       this.foodCount = res.length;
       console.log(res);
     });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   openAddFoodModal() {

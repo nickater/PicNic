@@ -1,1 +1,4 @@
-<p>past-events works!</p>
+<div *ngIf="pastEvents; else noPastEvents"></div>
+<ng-template #noPastEvents>
+  You're boring!
+</ng-template>

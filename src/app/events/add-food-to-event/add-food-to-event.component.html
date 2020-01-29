@@ -1,0 +1,62 @@
+<div *ngIf="this.event$ | async as currentEvent">
+  <mat-toolbar>{{ currentEvent.name }} </mat-toolbar>
+</div>
+<ng-template #noFood>
+  <mat-toolbar>
+    <button mat-button type="button" routerLink="food/create">Add Food</button>
+  </mat-toolbar>
+</ng-template>
+<form *ngIf="event$ | async; else loading" [formGroup]="addFoodToEventForm">
+  <mat-tab-group class="top">
+    <mat-tab label="Day {{ i + 1 }}" *ngFor="let day of days; let i = index">
+      <mat-tab-group class="bottom" [formGroup]="i">
+        <mat-tab label="{{ meals[0] | titlecase }}">
+          <mat-card>
+            <mat-label>Selections</mat-label>
+            <mat-select
+              formControlName="food"
+              multiple
+              *ngIf="food$ | async as food"
+            >
+              <mat-option *ngFor="let item of food" [value]="food.name">
+                {{ item.name }}</mat-option
+              >
+            </mat-select>
+          </mat-card>
+        </mat-tab>
+        <mat-tab label="{{ meals[1] | titlecase }}">
+          <mat-card>
+            <mat-label>Selections</mat-label>
+            <mat-select
+              formControlName="food"
+              multiple
+              *ngIf="food$ | async as food"
+            >
+              <mat-option *ngFor="let item of food" [value]="food">{{
+                item.name
+              }}</mat-option>
+            </mat-select></mat-card
+          >
+        </mat-tab>
+        <mat-tab label="{{ meals[2] | titlecase }}">
+          <mat-card>
+            <mat-label>Selections</mat-label>
+            <mat-select
+              formControlName="food"
+              multiple
+              *ngIf="food$ | async as food"
+            >
+              <mat-option *ngFor="let item of food" [value]="food">{{
+                item.name
+              }}</mat-option>
+            </mat-select></mat-card
+          >
+        </mat-tab>
+      </mat-tab-group>
+    </mat-tab>
+  </mat-tab-group>
+</form>
+
+<ng-template class="loading" #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>

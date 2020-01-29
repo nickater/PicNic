@@ -1,11 +1,13 @@
 import { Food } from './food';
 import { User } from './user';
+import { Note } from './note';
 
 export interface Event {
+  id: string;
   name: string;
-  startDate: Date;
-  endDate: Date;
-  plannedMeals: [
+  startDate: any;
+  endDate: any;
+  plannedMeals?: [
     {
       dayNumber: number;
       meals: [
@@ -16,5 +18,7 @@ export interface Event {
       ];
     }
   ];
-  attendees: User[];
+  attendees?: User[];
+  notes?: Note[];
+  duration: number;
 }
