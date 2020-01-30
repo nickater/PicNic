@@ -24,6 +24,10 @@ export class CreateEventComponent implements OnInit {
       endDate: null,
       notes: ''
     });
+
+    this.createEventForm.valueChanges.subscribe(
+      (form) => (this.createEventForm.controls.endDate = form.startDate)
+    );
   }
 
   onCancel() {
