@@ -7,91 +7,39 @@
       <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
         <div (click)="checkPasswordsMatch()">
           <mat-form-field>
-            <input
-              matInput
-              placeholder="First Name"
-              formControlName="firstName"
-              required
-            />
+            <input matInput placeholder="First Name" formControlName="firstName" required />
           </mat-form-field>
           <mat-form-field>
-            <input
-              matInput
-              placeholder="Last Name"
-              formControlName="lastName"
-              required
-            />
+            <input matInput placeholder="Last Name" formControlName="lastName" required />
           </mat-form-field>
           <mat-form-field>
-            <input
-              matInput
-              placeholder="Email"
-              formControlName="email"
-              required
-            />
+            <input matInput placeholder="Email" formControlName="email" required />
           </mat-form-field>
           <mat-form-field>
-            <input
-              matInput
-              type="password"
-              placeholder="Password"
-              formControlName="password"
-              required
-            />
+            <input matInput type="password" placeholder="Password" formControlName="password" required />
           </mat-form-field>
           <mat-form-field>
-            <input
-              matInput
-              type="password"
-              placeholder="Confirm Password"
-              formControlName="confirmPass"
-              required
-            />
+            <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPass" required />
           </mat-form-field>
-          <mat-error
-            *ngIf="
+          <mat-error *ngIf="
               registrationForm.controls['confirmPass'].touched &&
               !passwordsMatch
-            "
-          >
+            ">
             Your passwords do not match
           </mat-error>
           <mat-form-field>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              placeholder="Birthday"
-              formControlName="birthday"
-              required
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
+            <input matInput [matDatepicker]="picker" placeholder="Birthday" formControlName="birthday" required />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
           <div class="groupId">
             <mat-form-field id="groupId">
-              <input
-                matInput
-                placeholder="Group ID"
-                formControlName="groupId"
-                required
-              />
+              <input matInput placeholder="Group ID" formControlName="groupId" required />
             </mat-form-field>
 
             <div class="portion">
-              <mat-label
-                >Portion: {{ registrationForm.value.portion }}</mat-label
-              >
-              <mat-slider
-                required
-                min="0"
-                max="3"
-                step="0.5"
-                thumbLabel
-                formControlName="portion"
-              ></mat-slider>
+              <mat-label>Portion: {{ registrationForm.value.portion }}</mat-label>
+              <mat-slider required min="0" max="3" step="0.5" thumbLabel formControlName="portion"></mat-slider>
             </div>
           </div>
         </div>

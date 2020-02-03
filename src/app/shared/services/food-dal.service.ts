@@ -19,12 +19,10 @@ export class FoodDALService {
     private afs: AngularFirestore,
     private groupService: GroupDALService
   ) {
-    debugger;
     this.food = this.collection.valueChanges({ idField: 'id' });
   }
 
   getAllFood() {
-    debugger;
     return this.food;
   }
 

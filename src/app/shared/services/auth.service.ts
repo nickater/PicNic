@@ -21,10 +21,8 @@ export class AuthService {
     this.afAuth.authState.subscribe((res) => {
       if (res && res.uid) {
         this.user$ = of(res);
-        console.log('user is logged in');
       } else {
         this.user$ = null;
-        console.log('user is logged out');
       }
     });
   }
@@ -56,7 +54,6 @@ export class AuthService {
   logout() {
     this.afAuth.auth.signOut().then((cred) => {
       this.groupService.deleteGroupId();
-      console.log('You logged out');
     });
   }
 }

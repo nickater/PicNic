@@ -24,10 +24,6 @@ export class CreateEventComponent implements OnInit {
       endDate: null,
       notes: ''
     });
-
-    this.createEventForm.valueChanges.subscribe(
-      (form) => (this.createEventForm.controls.endDate = form.startDate)
-    );
   }
 
   onCancel() {
@@ -36,9 +32,13 @@ export class CreateEventComponent implements OnInit {
   }
 
   onSumbit() {
-    this.eventService.createEvent(this.createEventForm.value).then((cred) => {
-      this.eventService.eventId = cred.id;
-      this.router.navigate(['events/addEventFood', cred.id]);
-    });
+    this.eventService
+      .createEvent(this.createEventForm.value)
+      .then((id) => {
+        this.router.navigate(['events/addEventFood', id]);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 }

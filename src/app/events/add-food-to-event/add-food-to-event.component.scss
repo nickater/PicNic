@@ -1,3 +1,18 @@
+.container {
+  display: flex;
+  width: 100%;
+  text-align: center;
+}
+
+mat-card {
+  width: 100%;
+}
+
+mat-form-field {
+  padding-top: 10px;
+  height: auto;
+}
+
 .top {
   background-color: whitesmoke;
 }
@@ -6,7 +21,7 @@
   background-color: whitesmoke;
 }
 
-.loading {
+.spinner-container {
   display: flex;
   justify-content: center;
   margin-top: 80px;

@@ -7,43 +7,22 @@
           <input matInput formControlName="name" placeholder="Event Name" />
         </mat-form-field>
         <mat-form-field>
-          <input
-            matInput
-            [matDatepicker]="pickerStart"
-            formControlName="startDate"
-            placeholder="Start Date"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="pickerStart"
-          ></mat-datepicker-toggle>
+          <input matInput [matDatepicker]="pickerStart" formControlName="startDate" placeholder="Start Date" />
+          <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
           <mat-datepicker #pickerStart></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <input
-            matInput
-            formControlName="endDate"
-            [matDatepicker]="pickerEnd"
-            placeholder="End Date"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="pickerEnd"
-          ></mat-datepicker-toggle>
+          <input matInput formControlName="endDate" [matDatepicker]="pickerEnd" placeholder="End Date" />
+          <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
           <mat-datepicker #pickerEnd></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <textarea
-            cdkTextareaAutosize
-            matInput
-            formControlName="notes"
-            placeholder="Notes"
-          ></textarea>
+          <textarea cdkTextareaAutosize matInput formControlName="notes" placeholder="Notes"></textarea>
         </mat-form-field>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button type="submit">SAVE</button>
-        <button mat-raised-button type="button" (click)="onCancel()">
+        <button mat-raised-button color="primary" type="submit">SAVE</button>
+        <button mat-raised-button color="warn" type="button" (click)="onCancel()">
           CANCEL
         </button>
       </mat-card-actions>

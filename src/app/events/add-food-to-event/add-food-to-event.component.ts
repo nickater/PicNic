@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EventDalService } from 'src/app/shared/services/event-dal.service';
 import { FormBuilder, FormGroup, FormArray, Form } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -20,45 +20,59 @@ export class AddFoodToEventComponent implements OnInit {
   food$: Observable<Food>;
   eventId: string;
   event$: Observable<Event>;
-  loading: Observable<boolean> = of(false);
 
   constructor(
     private eventService: EventDalService,
     private foodService: FoodDALService,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    try {
-      this.addFoodToEventForm = this.fb.group({
-        name: '',
-        food: this.fb.array([])
-      });
-
-      this.route.params.subscribe((params) => (this.eventId = params.id));
-      this.event$ = this.eventService.getUpcomingEventById(this.eventId);
-      this.food$ = this.foodService.getAllFood();
-      this.event$.subscribe((res) => {
-        this.days = new Array(res.duration);
-        this.addFoodToEventForm.patchValue({
-          food: this.fb.array([this.addAllDayGroups(res.duration)])
-        });
-      });
-    } catch (error) {}
+    this.route.params.subscribe((params) => (this.eventId = params.id));
+    this.event$ = this.eventService.getUpcomingEventById(this.eventId);
+    this.food$ = this.foodService.getAllFood();
+    this.addFoodToEventForm = this.fb.group({
+      days: this.fb.array([])
+    });
+    this.addAllDayGroups();
   }
 
-  addAllDayGroups(duration: number): FormGroup {
-    for (let i = 0; i < duration; i++) {
-      return this.addDayGroup();
-    }
+  addAllDayGroups() {
+    this.event$.subscribe((res) => {
+      for (let i = 0; i < res.duration; i++) {
+        this.mealArray.push(this.addDayGroup(i));
+      }
+    });
   }
 
-  addDayGroup(): FormGroup {
+  get mealArray(): FormArray {
+    return this.addFoodToEventForm.get('days') as FormArray;
+  }
+
+  addDayGroup(index): FormGroup {
     return this.fb.group({
+      dayNumber: index,
       breakfast: '',
       lunch: '',
       dinner: ''
+    });
+  }
+
+  onSubmit() {
+    this.eventService.addFoodToEvent(
+      this.addFoodToEventForm.value.days,
+      this.eventId
+    );
+    this.router.navigate(['events']).then(() => {
+      this.addFoodToEventForm.reset();
+    });
+  }
+
+  onCancel() {
+    this.router.navigate(['events']).then(() => {
+      this.addFoodToEventForm.reset();
     });
   }
 

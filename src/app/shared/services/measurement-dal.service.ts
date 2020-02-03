@@ -24,22 +24,20 @@ export class MeasurementDalService {
   ) {
     this.getPrivateMeasurements();
     this.getPublicMeasurements();
-    this.allMeasurements = combineLatest(
+    this.allMeasurements = combineLatest([
       this.privateMeasurements,
       this.publicMeasurements
-    );
+    ]);
   }
 
   getPrivateMeasurements() {
     this.privateMeasurements = this.collection.valueChanges();
-    console.log(this.privateMeasurements);
   }
 
   getPublicMeasurements() {
     this.publicMeasurements = this.afs
       .collection('measurements')
       .valueChanges();
-    console.log(this.publicMeasurements);
   }
 
   mapMeasurements(measurements) {

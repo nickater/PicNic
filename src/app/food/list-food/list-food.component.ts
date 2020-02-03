@@ -29,7 +29,6 @@ export class ListFoodComponent implements OnInit, OnDestroy {
     this.subscription = this.foodService.getAllFood().subscribe((res) => {
       this.food = res;
       this.foodCount = res.length;
-      console.log(res);
     });
   }
 

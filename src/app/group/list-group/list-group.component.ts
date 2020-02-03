@@ -18,7 +18,6 @@ export class ListGroupComponent implements OnInit {
     this.groupService
       .getGroupById(this.groupService.groupId)
       .subscribe((res) => {
-        console.log(res);
         this.group = res;
       });
   }

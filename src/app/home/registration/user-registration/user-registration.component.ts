@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -16,7 +16,7 @@ import { CreateGroupComponent } from '../../../group/create-group/create-group.c
   templateUrl: './user-registration.component.html',
   styleUrls: ['./user-registration.component.scss']
 })
-export class UserRegistrationComponent implements OnInit {
+export class UserRegistrationComponent implements OnInit, OnDestroy {
   registrationForm: FormGroup;
   passwordsMatch: boolean;
   isNewGroup = false;
@@ -81,15 +81,17 @@ export class UserRegistrationComponent implements OnInit {
       );
       this.userService.registerUser(combinedUser).then(() => {
         this.userService.addUserToAllUsers(combinedUser);
-        this.router.navigate(['group']);
-        this.registrationForm.reset();
+        this.router.navigate(['group']).then(() => {
+          this.registrationForm.reset();
+        });
       });
     });
   }
 
+  ngOnDestroy(): void {}
+
   toggleNewGroup() {
     this.isNewGroup = !this.isNewGroup;
-    console.log(this.isNewGroup);
   }
 
   onCancel() {

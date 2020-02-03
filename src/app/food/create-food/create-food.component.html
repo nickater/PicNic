@@ -4,49 +4,26 @@
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>Add a Food</mat-card-title>
     </mat-card-header>
-    <mat-card-subtitle
-      >Please input food based off of single portions</mat-card-subtitle
-    >
+    <mat-card-subtitle>Please input food based off of single portions</mat-card-subtitle>
     <hr />
     <div>
       <mat-form-field>
-        <input
-          matInput
-          placeholder="Food name"
-          formControlName="name"
-          required
-        />
+        <input matInput placeholder="Food name" formControlName="name" required />
       </mat-form-field>
     </div>
-    <div
-      formArrayName="ingredients"
-      *ngFor="let ingredient of ingredientForms.controls; let i = index"
-    >
+    <div formArrayName="ingredients" *ngFor="let ingredient of ingredientForms.controls; let i = index">
       <div>
         <div [formGroupName]="i">
           <mat-form-field>
-            <input
-              matInput
-              placeholder="Ingredient Name"
-              formControlName="name"
-              required
-            />
+            <input matInput placeholder="Ingredient Name" formControlName="name" required />
           </mat-form-field>
           <mat-form-field>
-            <input
-              matInput
-              placeholder="Quantity"
-              formControlName="quantity"
-              required
-            />
+            <input matInput placeholder="Quantity" formControlName="quantity" required />
           </mat-form-field>
           <mat-form-field>
             <mat-label>Unit</mat-label>
             <mat-select formControlName="unit" required>
-              <mat-option
-                *ngFor="let item of measurements"
-                [value]="item.shortName"
-              >
+              <mat-option *ngFor="let item of measurements" [value]="item.shortName">
                 {{ item.shortName }}
               </mat-option>
             </mat-select>
@@ -58,28 +35,13 @@
       </div>
     </div>
     <mat-card-actions>
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="!addFoodForm.valid"
-      >
+      <button mat-raised-button color="primary" type="submit" [disabled]="!addFoodForm.valid">
         SAVE
       </button>
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="addIngredientButtonClick()"
-      >
+      <button mat-raised-button color="primary" type="button" (click)="addIngredientButtonClick()">
         Add Ingredient
       </button>
-      <button
-        mat-raised-button
-        color="warn"
-        type="button"
-        (click)="cancelHandler()"
-      >
+      <button mat-raised-button color="warn" type="button" (click)="cancelHandler()">
         CANCEL
       </button>
     </mat-card-actions>

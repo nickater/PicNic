@@ -19,7 +19,6 @@ export class GroupDALService {
   }
 
   getGroupById(groupId: string): Observable<any> {
-    console.log(groupId);
     return this.afs
       .collection('groups')
       .doc(groupId)

@@ -5,8 +5,8 @@ import {
   AngularFirestoreCollection
 } from '@angular/fire/firestore';
 import { GroupDALService } from './group-dal.service';
-import { Event } from 'src/app/models/event';
-import { Observable, pipe } from 'rxjs';
+import { Event, PlannedMeal } from 'src/app/models/event';
+import { Observable, pipe, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
@@ -14,14 +14,10 @@ import * as moment from 'moment';
   providedIn: 'root'
 })
 export class EventDalService {
-  eventId = 'TdgZSxk90nKwKQxceX5N';
-
   constructor(
     private afs: AngularFirestore,
     private groupService: GroupDALService
-  ) {
-    debugger;
-  }
+  ) {}
 
   getUpcomingEvents(): Observable<Event[]> {
     let itemsCollection: AngularFirestoreCollection<Event>;
@@ -47,8 +43,8 @@ export class EventDalService {
     return new Promise<number>((resolve) => {
       let diff;
       this.getUpcomingEventById(eventId).subscribe((res: any) => {
-        let startDate = moment(res.startDate.toDate());
-        let endDate = moment(res.endDate.toDate());
+        const startDate = moment(res.startDate.toDate());
+        const endDate = moment(res.endDate.toDate());
         diff = endDate.diff(startDate, 'days');
         resolve(diff);
       });
@@ -67,6 +63,17 @@ export class EventDalService {
     return event;
   }
 
+  async addIdToEvent(event: Event): Promise<Event> {
+    return new Promise<Event>((resolve) => {
+      const id = this.afs.createId();
+      const newEvent: Event = {
+        ...event,
+        id
+      };
+      resolve(newEvent);
+    });
+  }
+
   getPastEvents(): AngularFirestoreCollection<Event> {
     return this.afs
       .collection('groups')
@@ -74,13 +81,43 @@ export class EventDalService {
       .collection('pastEvents');
   }
 
-  createEvent(event: Event) {
-    let duration = this.eventDayCount(event);
-    let eventWithDuration = this.addDayCountToEvent(event, duration);
+  addFoodToEvent(meals: Array<PlannedMeal>, eventId: string) {
+    this.getUpcomingEventById(eventId).subscribe((res) => {
+      const event: Event = res;
+      event.plannedMeals = meals;
+      this.submitEventWithFood(event);
+    });
+  }
+
+  submitEventWithFood(event: any) {
     return this.afs
       .collection('groups')
       .doc(this.groupService.groupId)
       .collection('upcomingEvents')
-      .add(eventWithDuration);
+      .doc(event.id)
+      .set(event)
+      .catch((err) => console.error(err));
+  }
+
+  createEvent(event: Event) {
+    const duration = this.eventDayCount(event);
+    const eventWithDuration = this.addDayCountToEvent(event, duration);
+    return new Promise<string>((resolve) => {
+      this.addIdToEvent(eventWithDuration)
+        .then((eventWithId) => {
+          this.afs
+            .collection('groups')
+            .doc(this.groupService.groupId)
+            .collection('upcomingEvents')
+            .doc(eventWithId.id)
+            .set(eventWithId)
+            .then(() => {
+              resolve(eventWithId.id);
+            });
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
   }
 }
