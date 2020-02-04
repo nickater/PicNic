@@ -14,7 +14,7 @@ import * as firebase from 'firebase';
 export class AuthService {
   user$: Observable<any>;
   constructor(
-    private afAuth: AngularFireAuth,
+    public afAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private groupService: GroupDALService
   ) {

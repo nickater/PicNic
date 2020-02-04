@@ -5,9 +5,15 @@ export interface User {
   groupId: string;
   firstName: string;
   lastName: string;
+  displayName?: string;
   email: string;
-  password: string;
-  birthday: number;
-  portion: number;
-  eventsAttended: number;
+  photoUrl?: string;
+  password?: string;
+  birthday?: number;
+  portion?: number;
+  bio?: string;
+  eventsAttended?: number;
+  recipesContributed?: number;
+  isAdmin?: boolean;
+  hasCompletedProfile?: boolean;
 }

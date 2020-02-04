@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <mat-card class="card mat-elevation-z24">
     <mat-card-header>
       <mat-card-title class="mat-display-2">Login</mat-card-title>
@@ -21,4 +21,8 @@
       </form>
     </mat-card-content>
   </mat-card>
+</div> -->
+<div class="container">
+  <ngx-auth-firebaseui-login (onCreateAccountRequested)="goToRegistration()" (onSuccess)="onSubmit($event)"
+    [providers]="[providers.Google, providers.Facebook, providers.EmailAndPassword]"></ngx-auth-firebaseui-login>
 </div>

@@ -4,11 +4,13 @@ import { HomeComponent } from './home/home.component';
 import { UserLoginComponent } from './home/login/user-login/user-login.component';
 import { UserRegistrationComponent } from './home/registration/user-registration/user-registration.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { InitialFormComponent } from './home/initial-form/initial-form.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: UserLoginComponent },
   { path: 'register', component: UserRegistrationComponent },
+  { path: 'initialForm', component: InitialFormComponent },
   { path: 'profile', component: UserProfileComponent },
   {
     path: 'group',

@@ -1,0 +1,63 @@
+<div class="container">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>Register for PicNic!</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form *ngIf="registrationForm; else loading" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <div (click)="checkPasswordsMatch()">
+          <mat-form-field>
+            <input matInput placeholder="First Name" formControlName="firstName" required />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Last Name" formControlName="lastName" required />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email" required />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="password" placeholder="Password" formControlName="password" required />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPass" required />
+          </mat-form-field>
+          <mat-error *ngIf="
+                registrationForm.controls['confirmPass'].touched &&
+                !passwordsMatch
+              ">
+            Your passwords do not match
+          </mat-error>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Birthday" formControlName="birthday" required />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <div class="groupId">
+            <mat-form-field id="groupId">
+              <input matInput placeholder="Group ID" formControlName="groupId" required />
+            </mat-form-field>
+
+            <div class="portion">
+              <mat-label>Portion: {{ registrationForm.value.portion }}</mat-label>
+              <mat-slider required min="0" max="3" step="0.5" thumbLabel formControlName="portion"></mat-slider>
+            </div>
+          </div>
+        </div>
+        <div>
+          <mat-slide-toggle (change)="toggleNewGroup()">
+            New Group?
+          </mat-slide-toggle>
+        </div>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit">
+            REGISTER
+          </button>
+          <button mat-raised-button color="warn" type="button" (click)="onCancel()">CANCEL</button>
+        </mat-card-actions>
+      </form>
+      <ng-template #loading>
+        <mat-spinner></mat-spinner>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+</div>
