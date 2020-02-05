@@ -13,6 +13,8 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { environment } from 'src/environments/environment';
 import { InitialFormComponent } from './home/initial-form/initial-form.component';
+import { ErrorPromptComponent } from './home/login/error-prompt/error-prompt.component';
+import { MatDialogRef } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { InitialFormComponent } from './home/initial-form/initial-form.component
     UserLoginComponent,
     UserRegistrationComponent,
     UserProfileComponent,
-    InitialFormComponent
+    InitialFormComponent,
+    ErrorPromptComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,7 @@ import { InitialFormComponent } from './home/initial-form/initial-form.component
       environment.firebaseConfig,
       () => 'your_app_name_factory',
       {
-        enableFirestoreSync: true, // enable/disable autosync users with firestore
+        enableFirestoreSync: false, // enable/disable autosync users with firestore
         toastMessageOnAuthSuccess: false, // whether to open/show a snackbar message on auth success - default : true
         toastMessageOnAuthError: false, // whether to open/show a snackbar message on auth error - default : true
         authGuardFallbackURL: '/login', // url for unauthenticated users - to use in combination with canActivate feature on a route
@@ -51,8 +54,7 @@ import { InitialFormComponent } from './home/initial-form/initial-form.component
       }
     )
   ],
-  providers: [],
   bootstrap: [AppComponent],
-  entryComponents: []
+  entryComponents: [ErrorPromptComponent]
 })
 export class AppModule {}

@@ -23,6 +23,7 @@ import { CreateMeasurementComponent } from './measurement/create-measurement/cre
     FoodRoutingModule,
     MaterialModule,
     ReactiveFormsModule
-  ]
+  ],
+  entryComponents: [CreateMeasurementComponent]
 })
 export class FoodModule {}

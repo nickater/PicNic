@@ -7,6 +7,7 @@ import { MeasurementDalService } from 'src/app/shared/services/measurement-dal.s
 import { Observable, of } from 'rxjs';
 import { Measurement } from 'src/app/models/measurement';
 import { UpdateFoodComponent } from '../update-food/update-food.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-food',
@@ -20,6 +21,7 @@ export class ListFoodComponent implements OnInit, OnDestroy {
   foodAndMeasurements: {};
   subscription;
   constructor(
+    private router: Router,
     private dialog: MatDialog,
     private foodService: FoodDALService,
     private measurementService: MeasurementDalService
@@ -36,21 +38,13 @@ export class ListFoodComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  openAddFoodModal() {
-    this.dialog.open(CreateFoodComponent);
+  goToAddFoodComponent() {
+    this.router.navigate(['food/create']);
   }
 
-  editFoodOpen(food: any) {
-    const dialogConfig = new MatDialogConfig();
-    this.measurementService.allMeasurements.subscribe((res) => {
-      this.measurements = this.measurementService.mapMeasurements(res);
-    });
-    this.foodAndMeasurements = {
-      food,
-      measurements: this.measurements
-    };
-
-    dialogConfig.data = this.foodAndMeasurements;
-    this.dialog.open(UpdateFoodComponent, dialogConfig);
+  editFoodOpen(food: Food) {
+    console.log(food.id);
+    this.router.navigate(['food/update', food.id]);
+    this.foodService.tempFood = food;
   }
 }

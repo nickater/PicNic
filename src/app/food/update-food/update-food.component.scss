@@ -1,0 +1,29 @@
+#delete {
+  margin-left: 16px;
+}
+#header {
+  display: flex;
+  justify-content: start;
+}
+
+mat-card-title {
+  float: left;
+}
+
+mat-form-field {
+  width: 80%;
+}
+
+#name {
+  width: 95%;
+}
+
+#quantity,
+#unit {
+  width: 40%;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+}

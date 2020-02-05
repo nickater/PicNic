@@ -8,7 +8,7 @@ import { DeleteFoodComponent } from './delete-food/delete-food.component';
 const childRoutes: Routes = [
   { path: '', component: ListFoodComponent },
   { path: 'create', component: CreateFoodComponent },
-  { path: 'update', component: UpdateFoodComponent },
+  { path: 'update/:id', component: UpdateFoodComponent },
   { path: 'delete', component: DeleteFoodComponent }
 ];
 @NgModule({

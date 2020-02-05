@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { FoodDALService } from 'src/app/shared/services/food-dal.service';
 import {
   MatDialogRef,
@@ -12,55 +12,57 @@ import { Ingredient } from 'src/app/models/ingredient';
 import { CreateMeasurementComponent } from '../measurement/create-measurement/create-measurement.component';
 import { Food } from 'src/app/models/food';
 import { Measurement } from 'src/app/models/measurement';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-update-food',
   templateUrl: './update-food.component.html',
   styleUrls: ['./update-food.component.scss']
 })
-export class UpdateFoodComponent implements OnInit {
+export class UpdateFoodComponent implements OnInit, OnDestroy {
   editFoodForm: FormGroup;
   measurements: Measurement[];
-  food: Food = {
-    id: '',
-    lastUsed: '',
-    addedBy: '',
-    name: '',
-    description: '',
-    ingredients: [
-      {
-        name: '',
-        quantity: null,
-        unit: ''
-      }
-    ]
-  };
+  measurement$: any;
+  food: Observable<Food>;
 
   constructor(
     private fs: FoodDALService,
-    private dialogRef: MatDialogRef<UpdateFoodComponent>,
     private fb: FormBuilder,
     private measurementService: MeasurementDalService,
-    private dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    private router: Router,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
-    this.editFoodForm = this.fb.group({
-      id: this.data.food.id,
-      name: this.data.food.name,
-      description: this.data.food.description ? this.data.food.description : '',
-      ingredients: this.fb.array([this.addIngredientGroup()])
+    let id;
+    this.route.params.subscribe((res) => {
+      id = res.id;
     });
+    this.fs.getSingleFood(id).subscribe((food) => {
+      this.editFoodForm = this.fb.group({
+        id: id,
+        name: food.name,
+        description: food.description ? food.description : '',
+        ingredients: this.fb.array([this.addIngredientGroup()])
+      });
 
-    this.editFood(this.data.food);
-    this.measurementService.allMeasurements.subscribe((res) => {
-      this.measurements = this.measurementService.mapMeasurements(res);
+      this.editFood(food);
     });
+    this.measurement$ = this.measurementService.allMeasurements.subscribe(
+      (res) => {
+        this.measurements = this.measurementService.mapMeasurements(res);
+      }
+    );
+  }
 
-    this.editFoodForm.valueChanges.subscribe((res) => {
-      this.food = res;
-    });
+  ngOnDestroy() {
+    this.measurement$.unsubscribe();
+  }
+
+  getFoodForUpdate(id: string) {
+    return this.fs.getSingleFood(id);
   }
 
   addIngredientGroup(): FormGroup {
@@ -112,16 +114,23 @@ export class UpdateFoodComponent implements OnInit {
   }
 
   addNewUnit() {
-    const dialogConfig = new MatDialogConfig();
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig = {
+      width: '80%',
+      height: '40%'
+    };
     this.dialog.open(CreateMeasurementComponent, dialogConfig);
   }
 
   submitHandler() {
-    this.fs.editFood(this.food);
-    this.dialogRef.close();
+    console.log('this.editFoodForm.value:', this.editFoodForm.value);
+    this.fs.editFood(this.editFoodForm.value);
+    this.router.navigate(['food']);
   }
 
   cancelHandler() {
-    this.dialogRef.close();
+    this.router.navigate(['food']).then(() => {
+      this.editFoodForm.reset();
+    });
   }
 }

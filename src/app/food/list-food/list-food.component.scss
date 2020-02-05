@@ -1,7 +1,5 @@
 .container {
   padding: 10px 10% 0px 10%;
-  display: flex;
-  justify-content: center;
 }
 
 mat-toolbar {
@@ -13,7 +11,7 @@ mat-toolbar {
 }
 
 mat-expansion-panel {
-  width: 72vw;
+  width: auto;
 }
 
 mat-expansion-panel-header {
@@ -37,11 +35,8 @@ mat-panel-title {
 }
 
 .add {
-  position: fixed;
-  top: 110px;
-  right: 8%;
-  height: 40px;
-  width: 40px;
+  margin-top: 16px;
+  float: right;
 }
 
 .edit {

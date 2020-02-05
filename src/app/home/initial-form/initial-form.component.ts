@@ -51,7 +51,8 @@ export class InitialFormComponent implements OnInit {
     console.log(formValue);
     let user = {
       ...formValue,
-      ...userInfo
+      ...userInfo,
+      hasCompletedProfile: true
     };
     console.log('user', user);
     return user;

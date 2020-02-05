@@ -5,6 +5,7 @@ import { MatDialogRef } from '@angular/material';
 import { FoodDALService } from 'src/app/shared/services/food-dal.service';
 import { MeasurementDalService } from 'src/app/shared/services/measurement-dal.service';
 import { async } from '@angular/core/testing';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-create-food',
   templateUrl: './create-food.component.html',
@@ -18,7 +19,7 @@ export class CreateFoodComponent implements OnInit {
     private foodService: FoodDALService,
     private fb: FormBuilder,
     private measurementService: MeasurementDalService,
-    private dialogRef: MatDialogRef<CreateFoodComponent>
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -58,9 +59,9 @@ export class CreateFoodComponent implements OnInit {
 
   submitHandler() {
     this.foodService.addNewFood(this.addFoodForm.value);
-    this.dialogRef.close();
+    this.router.navigate(['food']);
   }
   cancelHandler() {
-    this.dialogRef.close();
+    this.router.navigate(['food']);
   }
 }

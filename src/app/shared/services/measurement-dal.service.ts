@@ -53,7 +53,39 @@ export class MeasurementDalService {
         }
       });
     }
-    return allMeasurements;
+    return this.sortMeasurementsByShortName(allMeasurements);
+  }
+
+  sortMeasurementsByShortName(measurements: Measurement[]): Measurement[] {
+    function compare(a, b) {
+      const measurementA = a.shortName.toUpperCase();
+      const measurementB = b.shortName.toUpperCase();
+
+      let comparison = 0;
+      if (measurementA > measurementB) {
+        comparison = 1;
+      } else if (measurementA < measurementB) {
+        comparison = -1;
+      }
+      return comparison;
+    }
+
+    let sortedMeasurements = measurements.sort(compare);
+
+    return sortedMeasurements;
+  }
+
+  removeRedundantMeasurements(measurements: Measurement[]): Measurement[] {
+    let cleanMeasurements = measurements.filter((measurement, index, self) => {
+      index ===
+        self.findIndex(
+          (t) =>
+            t.shortName === measurement.shortName &&
+            t.fullName === measurement.fullName
+        );
+    });
+
+    return cleanMeasurements;
   }
 
   addMeasurement(measurement: Measurement) {

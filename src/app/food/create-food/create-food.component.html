@@ -1,5 +1,5 @@
-<form [formGroup]="addFoodForm" (ngSubmit)="submitHandler()">
-  <mat-card class="modal-content">
+<mat-card class="content">
+  <form [formGroup]="addFoodForm" (ngSubmit)="submitHandler()">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>Add a Food</mat-card-title>
@@ -14,36 +14,43 @@
     <div formArrayName="ingredients" *ngFor="let ingredient of ingredientForms.controls; let i = index">
       <div>
         <div [formGroupName]="i">
-          <mat-form-field>
-            <input matInput placeholder="Ingredient Name" formControlName="name" required />
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Quantity" formControlName="quantity" required />
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Unit</mat-label>
-            <mat-select formControlName="unit" required>
-              <mat-option *ngFor="let item of measurements" [value]="item.shortName">
-                {{ item.shortName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <button mat-raised-button color="warn" (click)="deleteIngredient(i)">
-            Delete
-          </button>
+          <div>
+            <mat-form-field>
+              <input matInput placeholder="Ingredient Name" formControlName="name" required />
+            </mat-form-field>
+            <i class="material-icons" id="delete" (click)="deleteIngredient(i)">
+              backspace
+            </i>
+          </div>
+          <div>
+            <mat-form-field id="quantity">
+              <input matInput placeholder="Quantity" formControlName="quantity" required />
+            </mat-form-field>
+            <mat-form-field id="unit">
+              <mat-label>Unit</mat-label>
+              <mat-select formControlName="unit" required>
+                <mat-option *ngFor="let item of measurements" [value]="item.shortName">
+                  {{ item.shortName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+
         </div>
       </div>
+      <hr />
     </div>
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit" [disabled]="!addFoodForm.valid">
         SAVE
       </button>
-      <button mat-raised-button color="primary" type="button" (click)="addIngredientButtonClick()">
-        Add Ingredient
-      </button>
       <button mat-raised-button color="warn" type="button" (click)="cancelHandler()">
         CANCEL
       </button>
+      <button mat-raised-button color="primary" type="button" (click)="addIngredientButtonClick()">
+        Add Ingredient
+      </button>
     </mat-card-actions>
-  </mat-card>
-</form>
+  </form>
+</mat-card>

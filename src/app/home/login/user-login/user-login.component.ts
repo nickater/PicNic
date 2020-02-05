@@ -5,6 +5,8 @@ import { UserDalService } from 'src/app/shared/services/user-dal.service';
 import { GroupDALService } from 'src/app/shared/services/group-dal.service';
 import { Router } from '@angular/router';
 import { AuthProvider } from 'ngx-auth-firebaseui';
+import { MatDialog } from '@angular/material';
+import { ErrorPromptComponent } from '../error-prompt/error-prompt.component';
 
 @Component({
   selector: 'app-user-login',
@@ -20,7 +22,8 @@ export class UserLoginComponent implements OnInit {
     private authService: AuthService,
     private userService: UserDalService,
     private groupService: GroupDALService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -48,6 +51,10 @@ export class UserLoginComponent implements OnInit {
         }
       });
     } catch (err) {}
+  }
+
+  errorUserPrompt(event) {
+    this.dialog.open(ErrorPromptComponent);
   }
 
   onCancel() {

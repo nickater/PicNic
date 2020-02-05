@@ -9,6 +9,7 @@ import { GroupDALService } from './group-dal.service';
   providedIn: 'root'
 })
 export class FoodDALService {
+  tempFood: Food;
   food: Observable<any>;
   collection = this.afs
     .collection('groups')
@@ -24,6 +25,10 @@ export class FoodDALService {
 
   getAllFood() {
     return this.food;
+  }
+
+  getSingleFood(id: string): Observable<any> {
+    return this.collection.doc(id).valueChanges();
   }
 
   addNewFood(formValue: any) {
