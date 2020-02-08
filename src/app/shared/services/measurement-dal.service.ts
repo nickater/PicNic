@@ -1,22 +1,34 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  AngularFirestoreDocument
+} from '@angular/fire/firestore';
 import { Measurement } from 'src/app/models/measurement';
 import { GroupDALService } from './group-dal.service';
-import { of, concat, Observable, combineLatest } from 'rxjs';
-import { mergeMap, map } from 'rxjs/operators';
+import {
+  of,
+  concat,
+  Observable,
+  combineLatest,
+  merge,
+  forkJoin,
+  zip
+} from 'rxjs';
+import { mergeMap, map, tap, concatAll, mergeAll } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MeasurementDalService {
-  privateMeasurements: Observable<any>;
-  publicMeasurements: Observable<any>;
-  allMeasurements: Observable<any>;
+  allMeasurements$: Observable<Measurement[]>;
 
-  collection = this.afs
+  privateMeasurementPath = this.afs
     .collection('groups')
     .doc(this.groupService.groupId)
-    .collection('measurements');
+    .collection<Measurement>('measurements');
+
+  publicMeasurementPath = this.afs.collection<Measurement>('measurements');
 
   constructor(
     private afs: AngularFirestore,
@@ -24,23 +36,70 @@ export class MeasurementDalService {
   ) {
     this.getPrivateMeasurements();
     this.getPublicMeasurements();
-    this.allMeasurements = combineLatest([
-      this.privateMeasurements,
-      this.publicMeasurements
-    ]);
+  }
+
+  getSingleMeasurement(id: string, type: 'public' | 'private') {
+    if (type === 'public') {
+      return this.getSinglePublicMeasurement(id);
+    } else if (type === 'private') {
+      return this.getSinglePrivateMeasurement(id);
+    }
+  }
+
+  get publicMeasurements$(): Observable<Measurement[]> {
+    return this.getPublicMeasurements();
+  }
+
+  get privateMeasurements$(): Observable<Measurement[]> {
+    return this.getPrivateMeasurements();
+  }
+
+  getSinglePrivateMeasurement(id: string) {
+    let measurementDoc: AngularFirestoreDocument<Measurement>;
+    let measurement$: Observable<Measurement>;
+    measurementDoc = this.privateMeasurementPath.doc(id);
+    measurement$ = measurementDoc.valueChanges();
+    return measurement$;
+  }
+
+  getSinglePublicMeasurement(id: string) {
+    let measurementDoc: AngularFirestoreDocument<Measurement>;
+    let measurement$: Observable<Measurement>;
+    measurementDoc = this.privateMeasurementPath.doc(id);
+    measurement$ = measurementDoc.valueChanges();
+    return measurement$;
   }
 
   getPrivateMeasurements() {
-    this.privateMeasurements = this.collection.valueChanges();
+    let measurementCollection: AngularFirestoreCollection<Measurement>;
+    let privateMeasurements$: Observable<Measurement[]>;
+    measurementCollection = this.privateMeasurementPath;
+    privateMeasurements$ = measurementCollection.valueChanges();
+    return privateMeasurements$;
   }
 
   getPublicMeasurements() {
-    this.publicMeasurements = this.afs
-      .collection('measurements')
-      .valueChanges();
+    let measurementCollection: AngularFirestoreCollection<Measurement>;
+    let publicMeasurements$: Observable<Measurement[]>;
+    measurementCollection = this.afs.collection('measurements');
+    publicMeasurements$ = measurementCollection.valueChanges();
+    return publicMeasurements$;
   }
 
+  combineMeasurements() {
+    let combined$: Observable<Measurement[]>;
+    let combined: Measurement[];
+    combined$ = zip(this.publicMeasurements$, this.privateMeasurements$).pipe(
+      map((res) => res[0].concat(res[1])),
+      map((res) => this.sortMeasurementsByShortName(res))
+    );
+    return combined$;
+  }
+
+  sortMeasurements() {}
+
   mapMeasurements(measurements) {
+    measurements = this.removeRedundantMeasurements(measurements);
     const allMeasurements = [];
     if (measurements instanceof Array) {
       measurements.forEach((element) => {
@@ -75,7 +134,9 @@ export class MeasurementDalService {
     return sortedMeasurements;
   }
 
-  removeRedundantMeasurements(measurements: Measurement[]): Measurement[] {
+  removeRedundantMeasurements(
+    measurements: Measurement[]
+  ): Observable<Measurement[]> {
     let cleanMeasurements = measurements.filter((measurement, index, self) => {
       index ===
         self.findIndex(
@@ -85,7 +146,7 @@ export class MeasurementDalService {
         );
     });
 
-    return cleanMeasurements;
+    return of(cleanMeasurements);
   }
 
   addMeasurement(measurement: Measurement) {

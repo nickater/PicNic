@@ -4,7 +4,7 @@ import { Food } from 'src/app/models/food';
 import { FoodDALService } from 'src/app/shared/services/food-dal.service';
 import { CreateFoodComponent } from '../create-food/create-food.component';
 import { MeasurementDalService } from 'src/app/shared/services/measurement-dal.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { Measurement } from 'src/app/models/measurement';
 import { UpdateFoodComponent } from '../update-food/update-food.component';
 import { Router } from '@angular/router';
@@ -14,28 +14,17 @@ import { Router } from '@angular/router';
   templateUrl: './list-food.component.html',
   styleUrls: ['./list-food.component.scss']
 })
-export class ListFoodComponent implements OnInit, OnDestroy {
-  food: Food[];
-  foodCount: number;
+export class ListFoodComponent implements OnInit {
+  food$: Observable<Food[]>;
   measurements: any;
   foodAndMeasurements: {};
+  subscriptions: Subscription[];
+
   subscription;
-  constructor(
-    private router: Router,
-    private dialog: MatDialog,
-    private foodService: FoodDALService,
-    private measurementService: MeasurementDalService
-  ) {}
+  constructor(private router: Router, private foodService: FoodDALService) {}
 
   ngOnInit() {
-    this.subscription = this.foodService.getAllFood().subscribe((res) => {
-      this.food = res;
-      this.foodCount = res.length;
-    });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.food$ = this.subscription = this.foodService.getAllFood();
   }
 
   goToAddFoodComponent() {

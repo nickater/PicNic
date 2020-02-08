@@ -1,4 +1,7 @@
-<div *ngIf="pastEvents; else noPastEvents"></div>
+<div *ngIf="pastEvents | async as events; else noPastEvents">
+</div>
 <ng-template class="noEvents" #noPastEvents>
-  You're boring!
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
 </ng-template>

@@ -30,6 +30,27 @@ export class EventDalService {
     return items;
   }
 
+  getPastEvents(): Observable<Event[]> {
+    let itemsCollection: AngularFirestoreCollection<Event>;
+    let items: Observable<Event[]>;
+    itemsCollection = this.afs
+      .collection('groups')
+      .doc(this.groupService.groupId)
+      .collection('pastEvents');
+    items = itemsCollection.valueChanges().pipe(
+      map((res) => {
+        let array;
+        if (res.length === 0) {
+          array = undefined;
+        } else {
+          array = res;
+        }
+        return array;
+      })
+    );
+    return items;
+  }
+
   getUpcomingEventById(eventId: string): Observable<Event> {
     return this.afs
       .collection('groups')
@@ -72,13 +93,6 @@ export class EventDalService {
       };
       resolve(newEvent);
     });
-  }
-
-  getPastEvents(): AngularFirestoreCollection<Event> {
-    return this.afs
-      .collection('groups')
-      .doc(this.groupService.groupId)
-      .collection('pastEvents');
   }
 
   addFoodToEvent(meals: Array<PlannedMeal>, eventId: string) {

@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: space-around;
+}

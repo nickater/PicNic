@@ -10,15 +10,11 @@ import { User } from 'src/app/models/user';
 })
 export class ListGroupComponent implements OnInit {
   panelOpenState = false;
-  group: User[];
+  group$: Observable<User[]>;
 
   constructor(public groupService: GroupDALService) {}
 
   ngOnInit() {
-    this.groupService
-      .getGroupById(this.groupService.groupId)
-      .subscribe((res) => {
-        this.group = res;
-      });
+    this.group$ = this.groupService.getGroupById(this.groupService.groupId);
   }
 }

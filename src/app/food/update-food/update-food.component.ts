@@ -14,13 +14,15 @@ import { Food } from 'src/app/models/food';
 import { Measurement } from 'src/app/models/measurement';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AreYouSureComponent } from 'src/app/shared/components/are-you-sure/are-you-sure.component';
 
 @Component({
   selector: 'app-update-food',
   templateUrl: './update-food.component.html',
   styleUrls: ['./update-food.component.scss']
 })
-export class UpdateFoodComponent implements OnInit, OnDestroy {
+export class UpdateFoodComponent implements OnInit {
+  initialFoodName: string;
   editFoodForm: FormGroup;
   measurements: Measurement[];
   measurement$: any;
@@ -41,6 +43,7 @@ export class UpdateFoodComponent implements OnInit, OnDestroy {
       id = res.id;
     });
     this.fs.getSingleFood(id).subscribe((food) => {
+      this.initialFoodName = food.name;
       this.editFoodForm = this.fb.group({
         id: id,
         name: food.name,
@@ -50,15 +53,7 @@ export class UpdateFoodComponent implements OnInit, OnDestroy {
 
       this.editFood(food);
     });
-    this.measurement$ = this.measurementService.allMeasurements.subscribe(
-      (res) => {
-        this.measurements = this.measurementService.mapMeasurements(res);
-      }
-    );
-  }
-
-  ngOnDestroy() {
-    this.measurement$.unsubscribe();
+    this.measurement$ = this.measurementService.combineMeasurements();
   }
 
   getFoodForUpdate(id: string) {
@@ -128,9 +123,25 @@ export class UpdateFoodComponent implements OnInit, OnDestroy {
     this.router.navigate(['food']);
   }
 
-  cancelHandler() {
-    this.router.navigate(['food']).then(() => {
-      this.editFoodForm.reset();
+  cancelHandler(touched) {
+    if (touched) {
+      this.openAreYouSure();
+    } else {
+      this.router.navigate(['food']).then(() => {
+        this.editFoodForm.reset();
+      });
+    }
+  }
+
+  openAreYouSure() {
+    const dialogConfig: MatDialogConfig = {
+      data: ' changes to ' + this.initialFoodName || 'food'
+    };
+    const dialogRef = this.dialog.open(AreYouSureComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.router.navigate(['food']).then(() => this.editFoodForm.reset());
+      }
     });
   }
 }

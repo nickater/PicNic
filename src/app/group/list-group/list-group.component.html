@@ -1,5 +1,5 @@
 <div class="container">
-  <mat-accordion>
+  <mat-accordion *ngIf="group$ | async as group">
     <mat-expansion-panel *ngFor="let user of group">
       <mat-expansion-panel-header>
         <mat-panel-title>

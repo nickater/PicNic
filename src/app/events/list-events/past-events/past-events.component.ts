@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Event } from '../../../models/event';
 
 @Component({
   selector: 'app-past-events',
@@ -6,8 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./past-events.component.scss']
 })
 export class PastEventsComponent implements OnInit {
-  pastEvents = false;
-  constructor() {}
+  @Input() pastEvents: Observable<Event[]>;
 
   ngOnInit() {}
 }

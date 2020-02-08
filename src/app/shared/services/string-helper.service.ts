@@ -4,6 +4,15 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StringHelperService {
+  constructor() {}
 
-  constructor() { }
+  getFirstName(displayName: string) {
+    console.log('displayName.split:', displayName.split(' ')[0]);
+    return displayName.split(' ')[0];
+  }
+
+  getLastName(displayName: string) {
+    console.log('displayName.split:', displayName.split(' ')[1]);
+    return displayName.split(' ')[1];
+  }
 }

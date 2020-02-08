@@ -14,7 +14,7 @@ import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { environment } from 'src/environments/environment';
 import { InitialFormComponent } from './home/initial-form/initial-form.component';
 import { ErrorPromptComponent } from './home/login/error-prompt/error-prompt.component';
-import { MatDialogRef } from '@angular/material';
+import { AreYouSureComponent } from './shared/components/are-you-sure/are-you-sure.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,8 @@ import { MatDialogRef } from '@angular/material';
     UserRegistrationComponent,
     UserProfileComponent,
     InitialFormComponent,
-    ErrorPromptComponent
+    ErrorPromptComponent,
+    AreYouSureComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +56,6 @@ import { MatDialogRef } from '@angular/material';
     )
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorPromptComponent]
+  entryComponents: [ErrorPromptComponent, AreYouSureComponent]
 })
 export class AppModule {}

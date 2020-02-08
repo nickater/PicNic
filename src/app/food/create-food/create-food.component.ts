@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Measurement } from '../../models/measurement';
-import { MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { FoodDALService } from 'src/app/shared/services/food-dal.service';
 import { MeasurementDalService } from 'src/app/shared/services/measurement-dal.service';
-import { async } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AreYouSureComponent } from 'src/app/shared/components/are-you-sure/are-you-sure.component';
 @Component({
   selector: 'app-create-food',
   templateUrl: './create-food.component.html',
@@ -13,13 +14,14 @@ import { Router } from '@angular/router';
 })
 export class CreateFoodComponent implements OnInit {
   addFoodForm: FormGroup;
-  measurements: any = [];
+  measurements$: Observable<Measurement[]>;
 
   constructor(
     private foodService: FoodDALService,
     private fb: FormBuilder,
     private measurementService: MeasurementDalService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -30,9 +32,8 @@ export class CreateFoodComponent implements OnInit {
       description: '',
       ingredients: this.fb.array([this.addIngredientGroup()])
     });
-    this.measurementService.allMeasurements.subscribe((res) => {
-      this.measurements = this.measurementService.mapMeasurements(res);
-    });
+
+    this.measurements$ = this.measurementService.combineMeasurements();
   }
 
   get ingredientForms() {
@@ -61,7 +62,23 @@ export class CreateFoodComponent implements OnInit {
     this.foodService.addNewFood(this.addFoodForm.value);
     this.router.navigate(['food']);
   }
-  cancelHandler() {
-    this.router.navigate(['food']);
+  cancelHandler(touched) {
+    if (touched) {
+      this.openAreYouSure();
+    } else {
+      this.router.navigate(['food']);
+    }
+  }
+
+  openAreYouSure() {
+    const dialogConfig: MatDialogConfig = {
+      data: this.addFoodForm.controls.name.value || 'food'
+    };
+    const dialogRef = this.dialog.open(AreYouSureComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.router.navigate(['food']).then(() => this.addFoodForm.reset());
+      }
+    });
   }
 }

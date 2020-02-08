@@ -10,7 +10,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./list-events.component.scss']
 })
 export class ListEventsComponent implements OnInit {
-  allEvents: Observable<Event[]>;
   upcomingEvents: Observable<Event[]>;
   pastEvents: Observable<Event[]>;
 
@@ -18,5 +17,6 @@ export class ListEventsComponent implements OnInit {
 
   ngOnInit() {
     this.upcomingEvents = this.eventDal.getUpcomingEvents();
+    this.pastEvents = this.eventDal.getPastEvents();
   }
 }

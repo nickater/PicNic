@@ -1,4 +1,4 @@
-<div class="container" *ngIf="foodCount > 0; else noFood">
+<div class="container" *ngIf="food$ | async as food; else noFood">
   <mat-accordion>
     <mat-expansion-panel *ngFor="let item of food">
       <mat-expansion-panel-header>
@@ -37,9 +37,9 @@
   </button>
 </div>
 <ng-template #noFood>
-  <mat-toolbar>
-    There's no food here!
-  </mat-toolbar>
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
   <button class="add" mat-raised-button color="accent" (click)="goToAddFoodComponent()">
     <i class="material-icons">
       add

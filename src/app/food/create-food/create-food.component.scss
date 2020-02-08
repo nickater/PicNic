@@ -14,3 +14,7 @@ mat-form-field {
 #unit {
   width: 40%;
 }
+
+mat-select .select {
+  max-height: 100vh !important;
+}

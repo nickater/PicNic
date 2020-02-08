@@ -11,7 +11,7 @@
     <hr />
     <div>
       <mat-form-field id="name">
-        <input data-lpignore="true" matInput placeholder="Food name" formControlName="name" required />
+        <input matInput placeholder="Food name" formControlName="name" required />
       </mat-form-field>
     </div>
     <div formArrayName="ingredients" *ngFor="let ingredient of ingredientForms.controls; let i = index">
@@ -19,7 +19,7 @@
         <div [formGroupName]="i">
           <div>
             <mat-form-field>
-              <input data-lpignore="true" matInput placeholder="Ingredient Name" formControlName="name" required />
+              <input matInput placeholder="Ingredient Name" formControlName="name" required />
             </mat-form-field>
             <i class="material-icons" id="delete" (click)="deleteIngredient(i)">
               backspace
@@ -27,9 +27,9 @@
           </div>
           <div>
             <mat-form-field id="quantity">
-              <input data-lpignore="true" matInput placeholder="Quantity" formControlName="quantity" required />
+              <input matInput placeholder="Quantity" formControlName="quantity" required />
             </mat-form-field>
-            <mat-form-field id="unit">
+            <mat-form-field id="unit" *ngIf="measurement$ | async as measurements">
               <mat-label>Unit</mat-label>
               <mat-select formControlName="unit" required>
                 <mat-option (click)="addNewUnit()" class="blue">
@@ -50,7 +50,7 @@
         <button mat-raised-button color="primary" type="submit" [disabled]="!editFoodForm.valid">
           SAVE
         </button>
-        <button mat-raised-button color="warn" type="button" (click)="cancelHandler()">
+        <button mat-raised-button color="warn" type="button" (click)="cancelHandler(editFoodForm.touched)">
           CANCEL
         </button>
       </div>
