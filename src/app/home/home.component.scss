@@ -15,8 +15,21 @@ html {
 }
 
 .welcome-sign > div {
-  position: relative;
   top: 4em;
+}
+
+.welcome-sign h2.mat-display-4 {
+  color: floralwhite;
+  display: flex;
+  justify-content: space-around;
+  font-size: xx-large;
+  margin-bottom: 20px;
+}
+.welcome-sign p.mat-display-1 {
+  color: floralwhite;
+  display: flex;
+  justify-content: space-around;
+  font-size: large;
 }
 
 .welcome-sign h2.mat-display-4 {
@@ -31,7 +44,7 @@ html {
   justify-content: space-around;
 }
 
-@media screen and (max-width: 930px) {
+@media screen and (min-width: 930px) {
   .welcome-sign h2.mat-display-4 {
     color: floralwhite;
     display: flex;
@@ -43,21 +56,5 @@ html {
     display: flex;
     justify-content: space-around;
     font-size: x-large;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .welcome-sign h2.mat-display-4 {
-    color: floralwhite;
-    display: flex;
-    justify-content: space-around;
-    font-size: xx-large;
-    margin-bottom: 20px;
-  }
-  .welcome-sign p.mat-display-1 {
-    color: floralwhite;
-    display: flex;
-    justify-content: space-around;
-    font-size: large;
   }
 }

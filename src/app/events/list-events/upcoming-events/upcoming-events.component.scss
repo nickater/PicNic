@@ -10,5 +10,11 @@ mat-panel-title {
 .spinner-container {
   display: flex;
   justify-content: center;
-  margin-top: 80px;
+  padding: 30px;
+  background-color: white;
+}
+
+.add {
+  float: right;
+  margin: 10px;
 }

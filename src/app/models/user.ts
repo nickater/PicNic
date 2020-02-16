@@ -1,6 +1,6 @@
 import { Timestamp } from 'rxjs/internal/operators/timestamp';
 
-export interface User {
+export interface UserModel {
   id: string;
   groupId: string;
   firstName: string;
@@ -16,4 +16,5 @@ export interface User {
   recipesContributed?: number;
   isAdmin?: boolean;
   hasCompletedProfile?: boolean;
+  accountCreatedOn: Date;
 }

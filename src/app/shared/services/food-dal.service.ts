@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Food } from 'src/app/models/food';
 import { AuthService } from './auth.service';
 import { GroupDALService } from './group-dal.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,24 +15,32 @@ export class FoodDALService {
   collection = this.afs
     .collection('groups')
     .doc(this.groupService.groupId)
-    .collection('food');
+    .collection<Food>('food');
 
   constructor(
     private afs: AngularFirestore,
     private groupService: GroupDALService
-  ) {
-    this.food = this.collection.valueChanges({ idField: 'id' });
-  }
+  ) {}
 
   getAllFood() {
-    return this.food;
+    return this.collection.valueChanges().pipe(
+      map((res) => {
+        let array;
+        if (res.length === 0) {
+          array = undefined;
+        } else {
+          array = res;
+        }
+        return array;
+      })
+    );
   }
 
-  getSingleFood(id: string): Observable<any> {
-    return this.collection.doc(id).valueChanges();
+  getSingleFood(id: string): Observable<Food> {
+    return this.collection.doc<Food>(id).valueChanges();
   }
 
-  addNewFood(formValue: any) {
+  addNewFood(formValue: Food) {
     try {
       this.collection.add(formValue);
     } catch (err) {

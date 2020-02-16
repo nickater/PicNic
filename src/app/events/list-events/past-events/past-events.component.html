@@ -1,7 +1,12 @@
-<div *ngIf="pastEvents | async as events; else noPastEvents">
+<div *ngIf="pastEvents | async as events; else loading">
 </div>
-<ng-template class="noEvents" #noPastEvents>
-  <div class="spinner-container">
+<ng-template #loading>
+  <div class="spinner-container" *ngIf="stillLoading; else notLoading">
     <mat-spinner></mat-spinner>
   </div>
+  <ng-template class="spinner-container" #notLoading>
+    <div class="spinner-container">
+      <h2>Sorry, no events!</h2>
+    </div>
+  </ng-template>
 </ng-template>

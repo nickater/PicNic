@@ -5,10 +5,11 @@ import {
   AngularFirestoreDocument
 } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
-import { User } from 'src/app/models/user';
-import { GroupDALService } from './group-dal.service';
-import { AuthService } from './auth.service';
+import { UserModel } from 'src/app/models/user';
+import { GroupDALService } from '../group-dal.service';
+import { AuthService } from '../auth.service';
 import { flatMap, first } from 'rxjs/operators';
+import { UserAdapterService } from './user-adapter.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,30 +20,28 @@ export class UserDalService {
 
   constructor(
     public afs: AngularFirestore,
-    groupService: GroupDALService,
-    private auth: AuthService
+    private groupService: GroupDALService,
+    private auth: AuthService,
+    private userAdapter: UserAdapterService
   ) {
     this.groupId = groupService.groupId;
   }
 
-  addUserToAuth(user: User): any {
-    return this.auth.emailRegistration(user);
-  }
-
-  getUserById(id: string) {
+  getUserById(id: string): Observable<UserModel> {
     return this.afs
       .collection('groups')
       .doc(this.groupId)
       .collection('users')
-      .doc(id)
+      .doc<UserModel>(id)
       .valueChanges();
   }
 
-  async registerUser(user: User) {
+  async registerUser(user: UserModel) {
+    this.addUserToAllUsers(user);
     await this.updateUserData(user);
   }
 
-  async addUserToAllUsers(user: User) {
+  async addUserToAllUsers(user: UserModel) {
     try {
       await this.afs
         .collection('allUsers')
@@ -64,19 +63,32 @@ export class UserDalService {
         .valueChanges()
         .pipe(first());
     } catch (error) {
-      this.addUserToAllUsers(user);
+      this.addUserToAllUsers(user).then(() => {
+        return this.afs
+          .collection('allUsers')
+          .doc(user.email)
+          .valueChanges()
+          .pipe(first());
+      });
     }
   }
 
+  mapToUser(event) {
+    this.user = {
+      displayName: event.displayName,
+      email: event.email,
+      id: event.uid,
+      photoUrl: event.photoURL ? event.photoURL : ''
+    };
+  }
+
   private updateUserData(user) {
-    console.log('updateUserData');
-    console.log(user);
-    const userRef: AngularFirestoreDocument<User> = this.afs
+    const userRef = this.afs
       .collection('groups')
       .doc(user.groupId)
       .collection('users')
-      .doc(user.id !== '' ? user.id : user.id);
-    const data: User = {
+      .doc<UserModel>(user.id);
+    const data: UserModel = {
       id: user.id,
       groupId: user.groupId ? user.groupId : '',
       firstName: user.firstName ? user.firstName : '',
@@ -92,7 +104,8 @@ export class UserDalService {
       eventsAttended: user.eventsAttended ? user.eventsAttended : 0,
       hasCompletedProfile: user.hasCompletedProfile
         ? user.hasCompletedProfile
-        : false
+        : false,
+      accountCreatedOn: new Date()
     };
 
     return userRef.set(data, { merge: true });

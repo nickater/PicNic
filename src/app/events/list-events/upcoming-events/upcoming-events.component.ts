@@ -9,8 +9,12 @@ import { Observable } from 'rxjs';
 })
 export class UpcomingEventsComponent implements OnInit {
   @Input() upcomingEvents: Observable<Event[]>;
-
+  stillLoading = true;
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    setTimeout(() => {
+      this.stillLoading = false;
+    }, 4000);
+  }
 }

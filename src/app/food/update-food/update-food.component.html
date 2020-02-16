@@ -29,7 +29,7 @@
             <mat-form-field id="quantity">
               <input matInput placeholder="Quantity" formControlName="quantity" required />
             </mat-form-field>
-            <mat-form-field id="unit" *ngIf="measurement$ | async as measurements">
+            <mat-form-field id="unit" *ngIf="measurementSub$ | async as measurements">
               <mat-label>Unit</mat-label>
               <mat-select formControlName="unit" required>
                 <mat-option (click)="addNewUnit()" class="blue">
@@ -47,14 +47,16 @@
     </div>
     <mat-card-actions>
       <div>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!editFoodForm.valid">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!foodFormIsValid()">
           SAVE
         </button>
-        <button mat-raised-button color="warn" type="button" (click)="cancelHandler(editFoodForm.touched)">
+        <button mat-raised-button color="warn" type="button"
+          (click)="cancelHandler(editFoodForm.pristine, editFoodForm.touched)">
           CANCEL
         </button>
       </div>
-      <button mat-raised-button color="primary" type="button" (click)="addIngredientButtonClick()">
+      <button mat-raised-button color="primary" type="button" (click)="addIngredientButtonClick()"
+        [disabled]="!ingredientFormIsValid()">
         Add Ingredient
       </button>
     </mat-card-actions>

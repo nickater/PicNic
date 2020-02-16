@@ -31,7 +31,6 @@ export class CreateMeasurementComponent implements OnInit {
   }
 
   submitHandler() {
-    console.log(this.addMeasurementForm.value);
     this.ms.addMeasurement(this.measurement);
     this.dialogRef.close();
   }

@@ -7,48 +7,54 @@ import {
 import { GroupDALService } from './group-dal.service';
 import { Event, PlannedMeal } from 'src/app/models/event';
 import { Observable, pipe, merge } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventDalService {
+  pastCollection: AngularFirestoreCollection<Event> = this.afs
+    .collection('groups')
+    .doc(this.groupService.groupId)
+    .collection<Event>('pastEvents');
+
+  futureCollection: AngularFirestoreCollection<Event> = this.afs
+    .collection('groups')
+    .doc(this.groupService.groupId)
+    .collection<Event>('upcomingEvents');
+
   constructor(
     private afs: AngularFirestore,
     private groupService: GroupDALService
   ) {}
 
   getUpcomingEvents(): Observable<Event[]> {
-    let itemsCollection: AngularFirestoreCollection<Event>;
-    let items: Observable<Event[]>;
-    itemsCollection = this.afs
-      .collection('groups')
-      .doc(this.groupService.groupId)
-      .collection('upcomingEvents');
-    items = itemsCollection.valueChanges();
-    return items;
+    return this.convertEmptyArrayToUndefined(
+      this.futureCollection.valueChanges()
+    );
   }
 
   getPastEvents(): Observable<Event[]> {
-    let itemsCollection: AngularFirestoreCollection<Event>;
-    let items: Observable<Event[]>;
-    itemsCollection = this.afs
-      .collection('groups')
-      .doc(this.groupService.groupId)
-      .collection('pastEvents');
-    items = itemsCollection.valueChanges().pipe(
+    return this.convertEmptyArrayToUndefined(
+      this.pastCollection.valueChanges()
+    );
+  }
+
+  convertEmptyArrayToUndefined(
+    events: Observable<Event[]>
+  ): Observable<Event[] | null> {
+    return events.pipe(
       map((res) => {
         let array;
         if (res.length === 0) {
-          array = undefined;
+          array = null;
         } else {
           array = res;
         }
         return array;
       })
     );
-    return items;
   }
 
   getUpcomingEventById(eventId: string): Observable<Event> {

@@ -1,5 +1,5 @@
-<div class="container">
-  <ngx-auth-firebaseui-register (onLoginRequested)="goToLogin()" (onSuccess)="routeToInitialForm($event)"
-    (onError)="displayError($event)">
-  </ngx-auth-firebaseui-register>
-</div>
+  <div class="container">
+    <ngx-auth-firebaseui-register class="container" (onLoginRequested)="goToLogin()" (onSuccess)="onSubmit($event)"
+      (onError)="displayError($event)">
+    </ngx-auth-firebaseui-register>
+  </div>

@@ -1,11 +1,6 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FoodDALService } from 'src/app/shared/services/food-dal.service';
-import {
-  MatDialogRef,
-  MatDialog,
-  MAT_DIALOG_DATA,
-  MatDialogConfig
-} from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { MeasurementDalService } from 'src/app/shared/services/measurement-dal.service';
 import { Ingredient } from 'src/app/models/ingredient';
@@ -13,7 +8,7 @@ import { CreateMeasurementComponent } from '../measurement/create-measurement/cr
 import { Food } from 'src/app/models/food';
 import { Measurement } from 'src/app/models/measurement';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { AreYouSureComponent } from 'src/app/shared/components/are-you-sure/are-you-sure.component';
 
 @Component({
@@ -27,6 +22,7 @@ export class UpdateFoodComponent implements OnInit {
   measurements: Measurement[];
   measurement$: any;
   food: Observable<Food>;
+  measurementSub$ = new ReplaySubject<Measurement[]>();
 
   constructor(
     private fs: FoodDALService,
@@ -45,7 +41,7 @@ export class UpdateFoodComponent implements OnInit {
     this.fs.getSingleFood(id).subscribe((food) => {
       this.initialFoodName = food.name;
       this.editFoodForm = this.fb.group({
-        id: id,
+        id,
         name: food.name,
         description: food.description ? food.description : '',
         ingredients: this.fb.array([this.addIngredientGroup()])
@@ -53,7 +49,13 @@ export class UpdateFoodComponent implements OnInit {
 
       this.editFood(food);
     });
-    this.measurement$ = this.measurementService.combineMeasurements();
+    this.measurementService
+      .combineMeasurements()
+      .subscribe((res) => this.measurementSub$.next(res));
+  }
+
+  foodFormIsValid() {
+    return this.editFoodForm.valid;
   }
 
   getFoodForUpdate(id: string) {
@@ -70,6 +72,10 @@ export class UpdateFoodComponent implements OnInit {
 
   get ingredientForms() {
     return this.editFoodForm.get('ingredients') as FormArray;
+  }
+
+  ingredientFormIsValid() {
+    return this.ingredientForms.valid;
   }
 
   addIngredientButtonClick(): void {
@@ -118,13 +124,12 @@ export class UpdateFoodComponent implements OnInit {
   }
 
   submitHandler() {
-    console.log('this.editFoodForm.value:', this.editFoodForm.value);
     this.fs.editFood(this.editFoodForm.value);
     this.router.navigate(['food']);
   }
 
-  cancelHandler(touched) {
-    if (touched) {
+  cancelHandler(pristine, touched) {
+    if (pristine || touched) {
       this.openAreYouSure();
     } else {
       this.router.navigate(['food']).then(() => {

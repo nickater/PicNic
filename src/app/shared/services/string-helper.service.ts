@@ -7,12 +7,26 @@ export class StringHelperService {
   constructor() {}
 
   getFirstName(displayName: string) {
-    console.log('displayName.split:', displayName.split(' ')[0]);
-    return displayName.split(' ')[0];
+    try {
+      return displayName.split(' ')[0];
+    } catch (error) {
+      return '';
+    }
   }
 
   getLastName(displayName: string) {
-    console.log('displayName.split:', displayName.split(' ')[1]);
-    return displayName.split(' ')[1];
+    try {
+      return displayName.split(' ')[1];
+    } catch (error) {
+      return '';
+    }
   }
+
+  setToTitleCase = (name: string) => {
+    try {
+      return name.charAt(0).toUpperCase() + name.slice(1);
+    } catch (error) {
+      return '';
+    }
+  };
 }

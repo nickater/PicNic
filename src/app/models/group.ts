@@ -1,4 +1,5 @@
 export interface Group {
-  id?: string;
+  id: string;
+  password: string;
   eventCount?: number;
 }

@@ -16,7 +16,7 @@ mat-card-header {
 
 .card {
   height: 100%;
-  max-width: 400px;
+  max-width: 90vw;
   padding: 5%;
   width: auto;
 }
@@ -31,6 +31,10 @@ form {
   width: 100%;
 }
 
+.center {
+  text-align: center;
+}
+
 mat-form-field {
   width: 100%;
 }
@@ -39,17 +43,34 @@ mat-card-actions {
   justify-content: space-evenly;
 }
 
-.groupId {
+.groupCred {
   display: flex;
   justify-content: space-between;
+  width: 97vw;
+}
+
+.birthday {
+  width: 45%;
+}
+
+.birthday-portion {
+  display: flex;
+  justify-content: space-between;
+  width: 97vw;
 }
 
 #groupId {
   width: 45%;
 }
 
+#groupIdPassword {
+  width: 43%;
+  margin-right: 26px;
+}
+
 .portion {
   width: 45%;
+  margin-right: 20px;
 }
 mat-slider {
   position: relative;
@@ -61,4 +82,13 @@ mat-error {
   position: relative;
   bottom: 8px;
   padding-bottom: 8px;
+}
+
+.mat-calendar {
+  zoom: '0.75';
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
 }

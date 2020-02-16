@@ -1,20 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  AfterViewInit,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Measurement } from '../../models/measurement';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { FoodDALService } from 'src/app/shared/services/food-dal.service';
 import { MeasurementDalService } from 'src/app/shared/services/measurement-dal.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { AreYouSureComponent } from 'src/app/shared/components/are-you-sure/are-you-sure.component';
+import { CreateMeasurementComponent } from '../measurement/create-measurement/create-measurement.component';
 @Component({
   selector: 'app-create-food',
   templateUrl: './create-food.component.html',
-  styleUrls: ['./create-food.component.scss']
+  styleUrls: ['./create-food.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateFoodComponent implements OnInit {
   addFoodForm: FormGroup;
   measurements$: Observable<Measurement[]>;
+  measurementSub$ = new ReplaySubject<Measurement[]>();
 
   constructor(
     private foodService: FoodDALService,
@@ -33,11 +42,17 @@ export class CreateFoodComponent implements OnInit {
       ingredients: this.fb.array([this.addIngredientGroup()])
     });
 
-    this.measurements$ = this.measurementService.combineMeasurements();
+    this.measurementService
+      .combineMeasurements()
+      .subscribe((res) => this.measurementSub$.next(res));
   }
 
   get ingredientForms() {
     return this.addFoodForm.get('ingredients') as FormArray;
+  }
+
+  ingredientFormIsValid() {
+    return this.ingredientForms.valid;
   }
 
   addIngredientGroup(): FormGroup {
@@ -56,6 +71,15 @@ export class CreateFoodComponent implements OnInit {
 
   deleteIngredient(i) {
     this.ingredientForms.removeAt(i);
+  }
+
+  addNewUnit() {
+    let dialogConfig = new MatDialogConfig();
+    dialogConfig = {
+      width: '80%',
+      height: '40%'
+    };
+    this.dialog.open(CreateMeasurementComponent, dialogConfig);
   }
 
   submitHandler() {

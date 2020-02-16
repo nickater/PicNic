@@ -17,7 +17,7 @@ export class AddFoodToEventComponent implements OnInit {
   event: Event;
   addFoodToEventForm: FormGroup;
   meals = ['breakfast', 'lunch', 'dinner'];
-  food$: Observable<Food>;
+  food$: Observable<Food[]>;
   eventId: string;
   event$: Observable<Event>;
 

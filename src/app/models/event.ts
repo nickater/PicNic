@@ -1,5 +1,5 @@
 import { Food } from './food';
-import { User } from './user';
+import { UserModel } from './user';
 import { Note } from './note';
 
 export interface Event {
@@ -32,7 +32,7 @@ export interface Event {
         }
       ]
     | any;
-  attendees?: User[];
+  attendees?: UserModel[];
   notes?: Note[];
   duration: number;
 }

@@ -15,7 +15,6 @@ import { environment } from 'src/environments/environment';
 import { InitialFormComponent } from './home/initial-form/initial-form.component';
 import { ErrorPromptComponent } from './home/login/error-prompt/error-prompt.component';
 import { AreYouSureComponent } from './shared/components/are-you-sure/are-you-sure.component';
-
 @NgModule({
   declarations: [
     AppComponent,

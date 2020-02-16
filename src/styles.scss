@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/theming';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
-
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import 'https://fonts.googleapis.com/css?family=Montserrat&display=swap';
 // Define a custom typography config that overrides the font-family as well as the
 // `headlines` and `body-1` levels.
 $custom-typography: mat-typography-config(
@@ -13,10 +14,11 @@ $custom-typography: mat-typography-config(
 html,
 body {
   height: 100%;
+  overflow-x: hidden;
 }
 body {
   margin: 0;
-  padding-top: 60px;
+  padding-top: 50px;
   height: auto;
   font-family: 'Montserrat', sans-serif;
   background-attachment: fixed;

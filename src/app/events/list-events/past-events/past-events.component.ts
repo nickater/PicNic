@@ -9,6 +9,10 @@ import { Event } from '../../../models/event';
 })
 export class PastEventsComponent implements OnInit {
   @Input() pastEvents: Observable<Event[]>;
-
-  ngOnInit() {}
+  stillLoading = true;
+  ngOnInit() {
+    setTimeout(() => {
+      this.stillLoading = false;
+    }, 5000);
+  }
 }

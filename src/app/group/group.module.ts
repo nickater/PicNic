@@ -6,13 +6,17 @@ import { DeleteGroupComponent } from './delete-group/delete-group.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { GroupRoutingModule } from './group-routing.module';
 import { MaterialModule } from '../shared/angular-material';
+import { GroupExistsComponent } from '../home/registration/group-selector/group-exists/group-exists.component';
+import { GroupDoesntExistComponent } from '../home/registration/group-selector/group-doesnt-exist/group-doesnt-exist.component';
 
 @NgModule({
   declarations: [
     ListGroupComponent,
     UpdateGroupComponent,
     DeleteGroupComponent,
-    CreateGroupComponent
+    CreateGroupComponent,
+    GroupExistsComponent,
+    GroupDoesntExistComponent
   ],
   imports: [CommonModule, GroupRoutingModule, MaterialModule]
 })

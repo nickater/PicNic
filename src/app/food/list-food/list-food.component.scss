@@ -1,9 +1,5 @@
-mat-toolbar {
-  font-weight: bold;
-  justify-content: center;
-  margin-bottom: 20px;
-  border-radius: 6px;
-  font-size: xx-large;
+.container {
+  background-color: white;
 }
 
 mat-expansion-panel {
@@ -33,6 +29,7 @@ mat-panel-title {
 .add {
   margin-top: 16px;
   float: right;
+  margin-right: 16px;
 }
 
 .edit {
@@ -48,5 +45,8 @@ mat-panel-title {
 .spinner-container {
   display: flex;
   justify-content: center;
-  margin-top: 80px;
+  background-color: white;
+  width: 100%;
+  height: 160px;
+  padding-top: 40px;
 }

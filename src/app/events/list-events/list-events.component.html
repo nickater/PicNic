@@ -1,11 +1,6 @@
-<mat-tab-group dynamicHeight class="tab-group">
+<mat-tab-group [backgroundColor]="'primary'" dynamicHeight class="tab-group">
   <mat-tab label="Upcoming">
     <app-upcoming-events [upcomingEvents]="upcomingEvents"></app-upcoming-events>
-    <button class="add" mat-raised-button color="accent" routerLink="create">
-      <i class="material-icons">
-        add
-      </i>
-    </button>
   </mat-tab>
   <mat-tab label="Past">
     <app-past-events [pastEvents]="pastEvents"></app-past-events>

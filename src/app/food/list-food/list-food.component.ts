@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-food.component.scss']
 })
 export class ListFoodComponent implements OnInit {
+  stillLoading = true;
   food$: Observable<Food[]>;
   measurements: any;
   foodAndMeasurements: {};
@@ -24,7 +25,10 @@ export class ListFoodComponent implements OnInit {
   constructor(private router: Router, private foodService: FoodDALService) {}
 
   ngOnInit() {
-    this.food$ = this.subscription = this.foodService.getAllFood();
+    this.food$ = this.foodService.getAllFood();
+    setTimeout(() => {
+      this.stillLoading = false;
+    }, 3000);
   }
 
   goToAddFoodComponent() {
@@ -32,7 +36,6 @@ export class ListFoodComponent implements OnInit {
   }
 
   editFoodOpen(food: Food) {
-    console.log(food.id);
     this.router.navigate(['food/update', food.id]);
     this.foodService.tempFood = food;
   }

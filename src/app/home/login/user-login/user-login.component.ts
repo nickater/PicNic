@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { UserDalService } from 'src/app/shared/services/user-dal.service';
+import { UserDalService } from 'src/app/shared/services/user-services/user-dal.service';
 import { GroupDALService } from 'src/app/shared/services/group-dal.service';
 import { Router } from '@angular/router';
 import { AuthProvider } from 'ngx-auth-firebaseui';
 import { MatDialog } from '@angular/material';
 import { ErrorPromptComponent } from '../error-prompt/error-prompt.component';
+import { UserModel } from 'src/app/models/user';
 
 @Component({
   selector: 'app-user-login',
@@ -18,39 +19,30 @@ export class UserLoginComponent implements OnInit {
   providers = AuthProvider;
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
     private userService: UserDalService,
     private groupService: GroupDALService,
     private router: Router,
     private dialog: MatDialog
   ) {}
 
-  ngOnInit() {
-    this.loginForm = this.fb.group({
-      email: '',
-      password: ''
-    });
-  }
+  ngOnInit() {}
 
-  onSubmit(event) {
-    console.log('uid:', event.uid);
+  onSubmit(user: Partial<UserModel>) {
     try {
-      this.userService.retrieveGroupIdByEmail(event).subscribe((res: any) => {
-        if (res !== undefined) {
+      this.userService.retrieveGroupIdByEmail(user).subscribe((res: any) => {
+        if (this.groupService.doesGroupExist(res.groupId)) {
           this.groupService.groupId = res.groupId;
+          this.groupService.storeGroupId(res.groupId);
           this.router.navigate(['group']);
         } else {
           this.router.navigate(['initialForm']);
-          this.userService.user = {
-            displayName: event.displayName,
-            email: event.email,
-            id: event.uid,
-            photoUrl: event.photoURL ? event.photoURL : ''
-          };
+          this.userService.mapToUser(user);
         }
+        sessionStorage.setItem('isLoggedIn', 'true');
       });
-    } catch (err) {}
+    } catch (err) {
+      console.error('userLogin - onSubmit - ', err);
+    }
   }
 
   errorUserPrompt(event) {

@@ -88,15 +88,12 @@ export class MeasurementDalService {
 
   combineMeasurements() {
     let combined$: Observable<Measurement[]>;
-    let combined: Measurement[];
     combined$ = zip(this.publicMeasurements$, this.privateMeasurements$).pipe(
       map((res) => res[0].concat(res[1])),
       map((res) => this.sortMeasurementsByShortName(res))
     );
     return combined$;
   }
-
-  sortMeasurements() {}
 
   mapMeasurements(measurements) {
     measurements = this.removeRedundantMeasurements(measurements);
@@ -129,24 +126,24 @@ export class MeasurementDalService {
       return comparison;
     }
 
-    let sortedMeasurements = measurements.sort(compare);
+    const sortedMeasurements = measurements.sort(compare);
 
     return sortedMeasurements;
   }
 
-  removeRedundantMeasurements(
-    measurements: Measurement[]
-  ): Observable<Measurement[]> {
-    let cleanMeasurements = measurements.filter((measurement, index, self) => {
-      index ===
-        self.findIndex(
-          (t) =>
-            t.shortName === measurement.shortName &&
-            t.fullName === measurement.fullName
-        );
-    });
+  removeRedundantMeasurements(measurements: Measurement[]): Measurement[] {
+    const cleanMeasurements = measurements.filter(
+      (measurement, index, self) => {
+        index ===
+          self.findIndex(
+            (t) =>
+              t.shortName === measurement.shortName &&
+              t.fullName === measurement.fullName
+          );
+      }
+    );
 
-    return of(cleanMeasurements);
+    return cleanMeasurements;
   }
 
   addMeasurement(measurement: Measurement) {

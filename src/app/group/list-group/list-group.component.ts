@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupDALService } from 'src/app/shared/services/group-dal.service';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/models/user';
+import { UserModel } from 'src/app/models/user';
 
 @Component({
   selector: 'app-list-group',
@@ -10,7 +10,7 @@ import { User } from 'src/app/models/user';
 })
 export class ListGroupComponent implements OnInit {
   panelOpenState = false;
-  group$: Observable<User[]>;
+  group$: Observable<UserModel[]>;
 
   constructor(public groupService: GroupDALService) {}
 
