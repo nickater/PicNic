@@ -31,9 +31,9 @@ export class UserLoginComponent implements OnInit {
     try {
       this.userService.retrieveGroupIdByEmail(user).subscribe((res: any) => {
         if (this.groupService.doesGroupExist(res.groupId)) {
+          this.router.navigate(['group']);
           this.groupService.groupId = res.groupId;
           this.groupService.storeGroupId(res.groupId);
-          this.router.navigate(['group']);
         } else {
           this.router.navigate(['initialForm']);
           this.userService.mapToUser(user);

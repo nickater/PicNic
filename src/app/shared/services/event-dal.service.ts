@@ -17,12 +17,14 @@ export class EventDalService {
   pastCollection: AngularFirestoreCollection<Event> = this.afs
     .collection('groups')
     .doc(this.groupService.groupId)
-    .collection<Event>('pastEvents');
+    .collection<Event>('pastEvents', (ref) => ref.orderBy('startDate', 'desc'));
 
   futureCollection: AngularFirestoreCollection<Event> = this.afs
     .collection('groups')
     .doc(this.groupService.groupId)
-    .collection<Event>('upcomingEvents');
+    .collection<Event>('upcomingEvents', (ref) =>
+      ref.orderBy('startDate', 'asc')
+    );
 
   constructor(
     private afs: AngularFirestore,

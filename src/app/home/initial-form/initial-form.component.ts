@@ -64,8 +64,13 @@ export class InitialFormComponent implements OnInit {
   //   return this.registrationForm.get('groupCredentials.confirmIdPassword')
   // }
 
-  setGroupIdToLowerCase = (): void =>
-    (this.registrationForm.value.groupId = this.registrationForm.value.groupId.toLowerCase());
+  setGroupIdToLowerCase() {
+    if (!this.isNewGroup) {
+      this.registrationForm.value.groupId = this.registrationForm.value.groupId.toLowerCase();
+    } else {
+      this.registrationForm.value.groupId = this.registrationForm.value.groupId.toLowerCase();
+    }
+  }
 
   setToTitleCase = (name: string) =>
     name.charAt(0).toUpperCase() + name.slice(1);
@@ -75,29 +80,31 @@ export class InitialFormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.setGroupIdToLowerCase();
     const formValue = this.registrationForm.value;
     this.combineUser();
     try {
       if (this.isNewGroup) {
-        this.groupExists(formValue.groupId).then((res) => {
+        this.groupExists(formValue.newGroupId).then((res) => {
           if (!res) {
             this.groupService.addNewGroup(
-              formValue.groupId,
-              formValue.groupIdPassword
+              formValue.newGroupId,
+              formValue.newGroupIdPassword
             );
             this.userService.registerUser(this.combinedUser);
             this.navigateToGroup();
           } else {
             alert('Group Already Exists');
-            this.registrationForm.controls.groupId.reset();
-            this.registrationForm.controls.groupIdPassword.reset();
+            this.registrationForm.get('groupCredentials').reset();
           }
         });
       } else {
-        console.log('Made it into the not new group block');
         this.qualifiedUser(formValue).then((res) => {
-          res ? this.navigateToGroup() : alert('Incorrect Group Credentials!');
-          console.log('Made it into the then block', res);
+          if (res) {
+            this.navigateToGroup();
+          } else {
+            alert('Incorrect Group Credentials!');
+          }
         });
       }
     } catch (err) {
@@ -121,12 +128,22 @@ export class InitialFormComponent implements OnInit {
   }
 
   toggleNewGroup() {
+    const tempUser = this.user;
+    this.user = {
+      firstName: this.registrationForm.value.firstName,
+      lastName: this.registrationForm.value.lastName,
+      groupId: this.registrationForm.value.groupId,
+      email: tempUser.email,
+      birthday: this.registrationForm.value.birthday,
+      portion: this.registrationForm.value.portion
+    };
     if (!this.isNewGroup) {
       this.isNewGroup = !this.isNewGroup;
       this.registrationForm = this.formBuilder.buildCustomNewGroupForm(
         this.user
       );
     } else {
+      this.user.groupId = this.registrationForm.value.groupCredentials.newGroupId;
       this.isNewGroup = !this.isNewGroup;
       this.registrationForm = this.formBuilder.buildCustomForm(this.user);
     }

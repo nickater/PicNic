@@ -50,8 +50,7 @@
         <button mat-raised-button color="primary" type="submit" [disabled]="!foodFormIsValid()">
           SAVE
         </button>
-        <button mat-raised-button color="warn" type="button"
-          (click)="cancelHandler(editFoodForm.pristine, editFoodForm.touched)">
+        <button mat-raised-button color="warn" type="button" (click)="cancelHandler(editFoodForm.touched)">
           CANCEL
         </button>
       </div>

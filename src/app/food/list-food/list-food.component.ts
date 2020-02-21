@@ -36,6 +36,7 @@ export class ListFoodComponent implements OnInit {
   }
 
   editFoodOpen(food: Food) {
+    console.log(food.id);
     this.router.navigate(['food/update', food.id]);
     this.foodService.tempFood = food;
   }

@@ -24,6 +24,6 @@
 </div> -->
 <div class="container">
   <ngx-auth-firebaseui-login (onCreateAccountRequested)="goToRegistration()" (onSuccess)="onSubmit($event)"
-    (onError)="errorUserPrompt($event)"
-    [providers]="[providers.Google, providers.Facebook, providers.EmailAndPassword]"></ngx-auth-firebaseui-login>
+    (onError)="errorUserPrompt($event)" [providers]="[providers.Google, providers.EmailAndPassword]">
+  </ngx-auth-firebaseui-login>
 </div>

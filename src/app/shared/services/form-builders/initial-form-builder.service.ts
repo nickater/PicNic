@@ -16,22 +16,26 @@ export class InitialFormBuilderService {
     try {
       return this.fb.group({
         firstName: [
-          this.stringHelper.setToTitleCase(
-            this.stringHelper.getFirstName(user.displayName)
-          ),
+          user.firstName
+            ? user.firstName
+            : this.stringHelper.setToTitleCase(
+                this.stringHelper.getFirstName(user.displayName)
+              ),
           Validators.required
         ],
         lastName: [
-          this.stringHelper.setToTitleCase(
-            this.stringHelper.getLastName(user.displayName)
-          ),
+          user.lastName
+            ? user.lastName
+            : this.stringHelper.setToTitleCase(
+                this.stringHelper.getLastName(user.displayName)
+              ),
           Validators.required
         ],
         email: [user.email, [Validators.required, Validators.email]],
-        groupId: ['', Validators.required],
+        groupId: [user.groupId ? user.groupId : '', Validators.required],
         groupIdPassword: ['', Validators.required],
-        birthday: [null, Validators.required],
-        portion: [0, Validators.required]
+        birthday: [user.birthday ? user.birthday : null, Validators.required],
+        portion: [user.portion ? user.portion : 1, Validators.required]
       });
     } catch (err) {
       console.error(err);
@@ -42,22 +46,26 @@ export class InitialFormBuilderService {
     try {
       return this.fb.group({
         firstName: [
-          this.stringHelper.setToTitleCase(
-            this.stringHelper.getFirstName(user.displayName)
-          ),
+          user.firstName
+            ? user.firstName
+            : this.stringHelper.setToTitleCase(
+                this.stringHelper.getFirstName(user.displayName)
+              ),
           Validators.required
         ],
         lastName: [
-          this.stringHelper.setToTitleCase(
-            this.stringHelper.getLastName(user.displayName)
-          ),
+          user.lastName
+            ? user.lastName
+            : this.stringHelper.setToTitleCase(
+                this.stringHelper.getLastName(user.displayName)
+              ),
           Validators.required
         ],
         email: [user.email, [Validators.required, Validators.email]],
-        birthday: [null, Validators.required],
-        portion: [0, Validators.required],
+        birthday: [user.birthday ? user.birthday : null, Validators.required],
+        portion: [user.portion ? user.portion : 1, Validators.required],
         groupCredentials: this.fb.group({
-          newGroupId: ['', Validators.required],
+          newGroupId: [user.groupId ? user.groupId : '', Validators.required],
           newGroupIdPassword: ['', Validators.required],
           confirmIdPassword: ['', Validators.required]
         })

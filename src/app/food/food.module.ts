@@ -8,6 +8,8 @@ import { FoodRoutingModule } from './food-routing.module';
 import { MaterialModule } from '../shared/angular-material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateMeasurementComponent } from './measurement/create-measurement/create-measurement.component';
+import { MAT_SELECT_SCROLL_STRATEGY } from '@angular/material';
+import { Overlay } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [

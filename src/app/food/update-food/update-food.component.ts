@@ -128,8 +128,8 @@ export class UpdateFoodComponent implements OnInit {
     this.router.navigate(['food']);
   }
 
-  cancelHandler(pristine, touched) {
-    if (pristine || touched) {
+  cancelHandler(touched) {
+    if (touched) {
       this.openAreYouSure();
     } else {
       this.router.navigate(['food']).then(() => {

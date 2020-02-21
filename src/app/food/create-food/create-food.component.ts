@@ -1,24 +1,34 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-  AfterViewInit,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Measurement } from '../../models/measurement';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MAT_SELECT_SCROLL_STRATEGY
+} from '@angular/material';
 import { FoodDALService } from 'src/app/shared/services/food-dal.service';
 import { MeasurementDalService } from 'src/app/shared/services/measurement-dal.service';
 import { Router } from '@angular/router';
 import { Observable, ReplaySubject } from 'rxjs';
 import { AreYouSureComponent } from 'src/app/shared/components/are-you-sure/are-you-sure.component';
 import { CreateMeasurementComponent } from '../measurement/create-measurement/create-measurement.component';
+import { Overlay, BlockScrollStrategy } from '@angular/cdk/overlay';
+
+export function scrollFactory(overlay: Overlay): () => BlockScrollStrategy {
+  return () => overlay.scrollStrategies.block();
+}
 @Component({
   selector: 'app-create-food',
   templateUrl: './create-food.component.html',
   styleUrls: ['./create-food.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: MAT_SELECT_SCROLL_STRATEGY,
+      useFactory: scrollFactory,
+      deps: [Overlay]
+    }
+  ]
 })
 export class CreateFoodComponent implements OnInit {
   addFoodForm: FormGroup;
@@ -77,7 +87,7 @@ export class CreateFoodComponent implements OnInit {
     let dialogConfig = new MatDialogConfig();
     dialogConfig = {
       width: '80%',
-      height: '40%'
+      height: 'auto'
     };
     this.dialog.open(CreateMeasurementComponent, dialogConfig);
   }

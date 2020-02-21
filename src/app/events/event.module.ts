@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AddFoodToEventComponent } from './add-food-to-event/add-food-to-event.component';
 import { DeleteFoodFromEventComponent } from './delete-food-from-event/delete-food-from-event.component';
 import { MomentModule } from 'ngx-moment';
+import { EventDetailsComponent } from './event-details/event-details.component';
 @NgModule({
   declarations: [
     CreateEventComponent,
@@ -21,7 +22,8 @@ import { MomentModule } from 'ngx-moment';
     UpcomingEventsComponent,
     PastEventsComponent,
     AddFoodToEventComponent,
-    DeleteFoodFromEventComponent
+    DeleteFoodFromEventComponent,
+    EventDetailsComponent
   ],
   imports: [
     CommonModule,

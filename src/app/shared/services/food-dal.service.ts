@@ -23,8 +23,9 @@ export class FoodDALService {
   ) {}
 
   getAllFood() {
-    return this.collection.valueChanges().pipe(
+    return this.collection.valueChanges({ idfield: 'id' }).pipe(
       map((res) => {
+        console.log(res);
         let array;
         if (res.length === 0) {
           array = undefined;
