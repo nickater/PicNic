@@ -11,10 +11,10 @@ import { AngularFirebaseModule } from './shared/angular-fire.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
-import { environment } from 'src/environments/environment';
 import { InitialFormComponent } from './home/initial-form/initial-form.component';
-import { ErrorPromptComponent } from './home/login/error-prompt/error-prompt.component';
-import { AreYouSureComponent } from './shared/components/are-you-sure/are-you-sure.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { SharedComponentsModule } from './shared/shared-components.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,15 +22,14 @@ import { AreYouSureComponent } from './shared/components/are-you-sure/are-you-su
     UserLoginComponent,
     UserRegistrationComponent,
     UserProfileComponent,
-    InitialFormComponent,
-    ErrorPromptComponent,
-    AreYouSureComponent
+    InitialFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    SharedComponentsModule,
     AngularFirebaseModule,
     ReactiveFormsModule,
     NgxAuthFirebaseUIModule.forRoot(
@@ -52,9 +51,12 @@ import { AreYouSureComponent } from './shared/components/are-you-sure/are-you-su
         guardProtectedRoutesUntilEmailIsVerified: true,
         enableEmailVerification: true // default: true
       }
-    )
+    ),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
+    })
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorPromptComponent, AreYouSureComponent]
+  entryComponents: []
 })
 export class AppModule {}

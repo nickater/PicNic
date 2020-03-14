@@ -1,0 +1,8 @@
+<div class="spinner-container" *ngIf="stillLoading; else notLoading">
+  <mat-spinner></mat-spinner>
+</div>
+<ng-template class="spinner-container" #notLoading>
+  <div class="spinner-container">
+    <h2>{{ statement }}</h2>
+  </div>
+</ng-template>

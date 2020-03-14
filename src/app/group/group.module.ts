@@ -8,6 +8,7 @@ import { GroupRoutingModule } from './group-routing.module';
 import { MaterialModule } from '../shared/angular-material';
 import { GroupExistsComponent } from '../home/registration/group-selector/group-exists/group-exists.component';
 import { GroupDoesntExistComponent } from '../home/registration/group-selector/group-doesnt-exist/group-doesnt-exist.component';
+import { SharedComponentsModule } from '../shared/shared-components.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,11 @@ import { GroupDoesntExistComponent } from '../home/registration/group-selector/g
     GroupExistsComponent,
     GroupDoesntExistComponent
   ],
-  imports: [CommonModule, GroupRoutingModule, MaterialModule]
+  imports: [
+    CommonModule,
+    GroupRoutingModule,
+    MaterialModule,
+    SharedComponentsModule
+  ]
 })
 export class GroupModule {}

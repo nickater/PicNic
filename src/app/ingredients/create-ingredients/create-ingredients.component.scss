@@ -1,0 +1,27 @@
+.title {
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.inner-container {
+  display: flex;
+  justify-content: center;
+}
+
+.ingredient {
+  width: 45vw;
+}
+
+.liquid {
+  width: 45vw;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+mat-card-content {
+  padding-top: 10px;
+}

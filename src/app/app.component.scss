@@ -7,6 +7,7 @@ mat-toolbar {
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 10;
 }
 
 .home {
@@ -20,5 +21,9 @@ button i {
 .group {
   display: flex;
   justify-content: space-around;
-  border-bottom: 2px solid black;
+  position: fixed;
+  z-index: 9;
+}
+.router-outlet {
+  margin-top: 8px;
 }

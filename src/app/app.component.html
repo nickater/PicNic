@@ -19,6 +19,7 @@
         <button mat-menu-item routerLink="/group">Group</button>
         <button mat-menu-item routerLink="/events">Events</button>
         <button mat-menu-item routerLink="/food">Food</button>
+        <button mat-menu-item routerLink="/food/ingredients">Ingredients</button>
         <button mat-menu-item (click)="auth.logout()" routerLink="/">
           Logout
         </button>
@@ -33,4 +34,6 @@
     </h1>
   </div>
 </mat-toolbar>
-<router-outlet></router-outlet>
+<div class="router-outlet">
+  <router-outlet></router-outlet>
+</div>

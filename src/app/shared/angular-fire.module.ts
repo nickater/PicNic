@@ -14,6 +14,7 @@ import * as firebase from 'firebase';
     AngularFirestoreModule.enablePersistence(),
     AngularFireStorageModule,
     AngularFireAuthModule
-  ]
+  ],
+  declarations: []
 })
 export class AngularFirebaseModule {}

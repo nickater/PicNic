@@ -1,0 +1,29 @@
+<div class="container">
+  <mat-card-title class="title">Add Ingredient</mat-card-title>
+  <mat-divider></mat-divider>
+  <div class="inner-container">
+    <form [formGroup]="addIngredientForm">
+      <mat-card-content>
+        <mat-form-field class="ingredient" required>
+          <input placeholder="Ingredient" matInput formControlName="name" />
+        </mat-form-field>
+        <mat-form-field class="liquid">
+          <mat-select placeholder="Liquid?" formControlName="isLiquid" required>
+            <mat-option [value]="true">
+              Yes
+            </mat-option>
+            <mat-option [value]="false">
+              No
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-card-actions class="actions">
+          <button type="button" (click)="onReset()" mat-raised-button color="warn"
+            [disabled]="!addIngredientForm.touched">Reset</button>
+          <button type="button" (click)="onSubmit()" mat-raised-button color="primary"
+            [disabled]="!addIngredientForm.valid">Add</button>
+        </mat-card-actions>
+      </mat-card-content>
+    </form>
+  </div>
+</div>

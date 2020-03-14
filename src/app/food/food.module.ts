@@ -8,8 +8,12 @@ import { FoodRoutingModule } from './food-routing.module';
 import { MaterialModule } from '../shared/angular-material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateMeasurementComponent } from './measurement/create-measurement/create-measurement.component';
-import { MAT_SELECT_SCROLL_STRATEGY } from '@angular/material';
-import { Overlay } from '@angular/cdk/overlay';
+import { SharedComponentsModule } from '../shared/shared-components.module';
+import { CreateIngredientsComponent } from '../ingredients/create-ingredients/create-ingredients.component';
+import { ListIngredientsComponent } from '../ingredients/list-ingredients/list-ingredients.component';
+import { UpdateIngredientsComponent } from '../ingredients/update-ingredients/update-ingredients.component';
+import { DeleteIngredientsComponent } from '../ingredients/delete-ingredients/delete-ingredients.component';
+import { PickIngredientComponent } from '../ingredients/pick-ingredient/pick-ingredient.component';
 
 @NgModule({
   declarations: [
@@ -18,13 +22,19 @@ import { Overlay } from '@angular/cdk/overlay';
     UpdateFoodComponent,
     DeleteFoodComponent,
     CreateMeasurementComponent,
-    CreateMeasurementComponent
+    CreateMeasurementComponent,
+    CreateIngredientsComponent,
+    ListIngredientsComponent,
+    UpdateIngredientsComponent,
+    DeleteIngredientsComponent,
+    PickIngredientComponent
   ],
   imports: [
     CommonModule,
     FoodRoutingModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedComponentsModule
   ],
   entryComponents: [CreateMeasurementComponent]
 })

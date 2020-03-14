@@ -1,0 +1,23 @@
+<div class="container">
+  <mat-card *ngIf="ingredients$ | async as ingredients; else loading">
+    <mat-card-title class="title">Ingredients</mat-card-title>
+    <mat-card-content class="content">
+      <mat-list>
+        <div *ngFor="let ingredient of ingredients" class="item">
+          <mat-list-item>{{ingredient.name | titlecase}}</mat-list-item>
+          <mat-list-item *ngIf="ingredient.popularity === 1">Used {{ingredient.popularity }} time
+          </mat-list-item>
+          <mat-list-item *ngIf="ingredient.popularity > 1">Used {{ingredient.popularity }} times
+          </mat-list-item>
+          <mat-list-item *ngIf="ingredient.popularity === 0">Never used</mat-list-item>
+          <mat-divider></mat-divider>
+        </div>
+      </mat-list>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <app-create-ingredients></app-create-ingredients>
+  </mat-card>
+  <ng-template #loading>
+    <app-waiting [stillLoading]="stillLoading"></app-waiting>
+  </ng-template>
+</div>

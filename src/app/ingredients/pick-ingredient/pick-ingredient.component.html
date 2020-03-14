@@ -1,0 +1,13 @@
+<div class="ingredient-row" [formGroupName]="formGroupName">
+  <mat-form-field class="ingredient">
+    <input type="text" placeholder="Ingredient" matInput formControlName="name" [matAutocomplete]="auto" />
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let ingredient of filteredOptions | async as ingredients" [value]="ingredient.name">
+        {{ingredient.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <i *ngIf="ingredientForms.length > 1" class="material-icons backspace" id="delete" (click)="deleteIngredient(i)">
+    backspace
+  </i>
+</div>

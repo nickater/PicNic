@@ -1,0 +1,20 @@
+.container {
+  margin-top: 50px;
+}
+.item {
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-list-item {
+  display: inline;
+}
+
+.title {
+  display: flex;
+  justify-content: space-around;
+}
+
+.content {
+  max-height: 70vh;
+}

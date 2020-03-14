@@ -9,7 +9,7 @@ export interface UserModel {
   email: string;
   photoUrl?: string;
   password?: string;
-  birthday?: number;
+  birthday?: any;
   portion?: number;
   bio?: string;
   eventsAttended?: number;

@@ -11,10 +11,14 @@ import { UserModel } from 'src/app/models/user';
 export class ListGroupComponent implements OnInit {
   panelOpenState = false;
   group$: Observable<UserModel[]>;
-
+  stillLoading = true;
+  statement = 'No one found!';
   constructor(public groupService: GroupDALService) {}
 
   ngOnInit() {
+    setTimeout(() => {
+      this.stillLoading = false;
+    }, 4000);
     this.group$ = this.groupService.getGroupById(this.groupService.groupId);
   }
 }

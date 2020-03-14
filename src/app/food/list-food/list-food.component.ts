@@ -20,12 +20,12 @@ export class ListFoodComponent implements OnInit {
   measurements: any;
   foodAndMeasurements: {};
   subscriptions: Subscription[];
-
+  statement = 'No food found!';
   subscription;
   constructor(private router: Router, private foodService: FoodDALService) {}
 
   ngOnInit() {
-    this.food$ = this.foodService.getAllFood();
+    this.food$ = this.foodService.getAllFood().pipe();
     setTimeout(() => {
       this.stillLoading = false;
     }, 3000);
@@ -36,7 +36,6 @@ export class ListFoodComponent implements OnInit {
   }
 
   editFoodOpen(food: Food) {
-    console.log(food.id);
     this.router.navigate(['food/update', food.id]);
     this.foodService.tempFood = food;
   }

@@ -16,13 +16,14 @@
       </mat-expansion-panel-header>
       <div class="expanded-panel">
         <mat-list>
-          <mat-list-item *ngFor="let ing of item.ingredients">
+          <mat-list-item class="item" *ngFor="let ing of item.ingredients">
             <div *ngIf="ing.quantity < 2; else plural">
               {{ ing.quantity }} {{ ing.unit }} of {{ ing.name | lowercase}}
             </div>
             <ng-template #plural>
               {{ ing.quantity }} {{ ing.unit }}s of {{ ing.name | lowercase}}
             </ng-template>
+            <mat-divider></mat-divider>
           </mat-list-item>
         </mat-list>
       </div>
@@ -37,14 +38,7 @@
   </mat-accordion>
 </div>
 <ng-template #loading>
-  <div class="spinner-container" *ngIf="stillLoading; else notLoading">
-    <mat-spinner></mat-spinner>
-  </div>
-  <ng-template class="spinner-container" #notLoading>
-    <div class="spinner-container">
-      <h2>Sorry, no food!</h2>
-    </div>
-  </ng-template>
+  <app-waiting [statement]="statement" [stillLoading]="stillLoading"></app-waiting>
 </ng-template>
 <button class="add" mat-raised-button color="accent" (click)="goToAddFoodComponent()">
   <i class="material-icons">

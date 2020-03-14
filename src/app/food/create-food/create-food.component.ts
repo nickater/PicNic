@@ -13,6 +13,10 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { AreYouSureComponent } from 'src/app/shared/components/are-you-sure/are-you-sure.component';
 import { CreateMeasurementComponent } from '../measurement/create-measurement/create-measurement.component';
 import { Overlay, BlockScrollStrategy } from '@angular/cdk/overlay';
+import { IngredientChoice } from 'src/app/models/ingredient';
+import { IngredientDalService } from 'src/app/shared/services/ingredient-dal.service';
+import { startWith, map, filter } from 'rxjs/operators';
+import { isNumber } from 'util';
 
 export function scrollFactory(overlay: Overlay): () => BlockScrollStrategy {
   return () => overlay.scrollStrategies.block();
@@ -33,12 +37,14 @@ export function scrollFactory(overlay: Overlay): () => BlockScrollStrategy {
 export class CreateFoodComponent implements OnInit {
   addFoodForm: FormGroup;
   measurements$: Observable<Measurement[]>;
+  filteredOptions: Observable<IngredientChoice[]>;
   measurementSub$ = new ReplaySubject<Measurement[]>();
-
+  ingredients: IngredientChoice[];
   constructor(
     private foodService: FoodDALService,
     private fb: FormBuilder,
     private measurementService: MeasurementDalService,
+    private ingredientService: IngredientDalService,
     private router: Router,
     private dialog: MatDialog
   ) {}
@@ -68,7 +74,7 @@ export class CreateFoodComponent implements OnInit {
   addIngredientGroup(): FormGroup {
     return this.fb.group({
       name: '',
-      quantity: null,
+      quantity: [null, Validators.required],
       unit: ''
     });
   }
