@@ -4,6 +4,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { MaterialModule } from '../shared/angular-material';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,6 @@ import { CreateUserComponent } from './create-user/create-user.component';
     DeleteUserComponent,
     CreateUserComponent
   ],
-  imports: [CommonModule]
+  imports: [CommonModule, MaterialModule]
 })
 export class UserModule {}

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="group$ | async as group; else loading">
   <mat-accordion>
     <mat-expansion-panel *ngFor="let user of group">
       <mat-expansion-panel-header>
@@ -6,7 +6,7 @@
           {{ user.firstName | titlecase }} {{ user.lastName | titlecase }}
         </mat-panel-title>
         <mat-panel-description>
-          Events Attended: 0
+          Events Attended: {{ user.eventsAttended ? user.eventsAttended : 0 }}
         </mat-panel-description>
       </mat-expansion-panel-header>
 
@@ -18,7 +18,16 @@
         <mat-panel-description>
           Portion: {{ user.portion }}
         </mat-panel-description>
+        <button mat-raised-button color="primary">Profile</button>
       </div>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
+<ng-template #loading>
+  <app-waiting [statement]="statement" [stillLoading]="stillLoading"></app-waiting>
+  <button class="add" mat-raised-button color="accent">
+    <i routerLink="create" class="material-icons">
+      add
+    </i>
+  </button>
+</ng-template>

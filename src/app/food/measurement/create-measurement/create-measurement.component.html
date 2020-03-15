@@ -1,1 +1,32 @@
-<p>create-measurement works!</p>
+<mat-card-header>
+  <mat-card-title>
+    Add Measurement
+  </mat-card-title>
+</mat-card-header>
+<hr />
+<form [formGroup]="addMeasurementForm" (ngSubmit)="submitHandler()">
+  <div>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Full Name: ex - teaspoon" formControlName="fullName">
+    </mat-form-field>
+    <div>
+      <mat-form-field class="half-width">
+        <input matInput placeholder="Short Name: ex - tsp" formControlName="shortName">
+      </mat-form-field>
+
+      <mat-form-field class="half-width">
+        <mat-select formControlName="type" placeholder="Type">
+          <mat-option value="Volume">Volume</mat-option>
+          <mat-option value="Weight">Weight</mat-option>
+          <mat-option value="Distance">Distance</mat-option>
+          <mat-option value="Count">Count</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <mat-action-row><button mat-raised-button color="primary" type="submit"
+      [disabled]="!addMeasurementForm.valid">SAVE</button>
+    <button mat-raised-button color="warn" type="button" (click)="onCancel()">CANCEL</button>
+  </mat-action-row>
+
+</form>

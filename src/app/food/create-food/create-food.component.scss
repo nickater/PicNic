@@ -1,0 +1,42 @@
+.container {
+  margin-top: 55px;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-infix {
+  font-size: small;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card-title {
+  font-weight: bold;
+  float: left;
+}
+
+mat-card-subtitle {
+  font-size: 0.95em;
+}
+
+#delete {
+  margin-left: 10px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+#quantity,
+#unit {
+  width: 45%;
+}
+
+#unit {
+  float: right;
+}
+
+mat-select .select {
+  max-height: 100vh !important;
+}

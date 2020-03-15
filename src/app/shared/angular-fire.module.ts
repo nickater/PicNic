@@ -5,15 +5,16 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../../environments/environment';
+import * as firebase from 'firebase';
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule.enablePersistence(),
     AngularFireStorageModule,
-    AngularFireAuthModule,
-  ]
+    AngularFireAuthModule
+  ],
+  declarations: []
 })
-export class AngularFirebaseModule { }
+export class AngularFirebaseModule {}

@@ -10,6 +10,5 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class HomeComponent implements OnInit {
   constructor(private router: Router, public auth: AuthService) {}
-
   ngOnInit() {}
 }

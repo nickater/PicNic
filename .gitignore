@@ -47,3 +47,7 @@ testem.log
 .DS_Store
 Thumbs.db
 firebase-debug.log
+*.cache
+.firebase
+.firebase/hosting.ZGlzdFxBbmdQaWNOaWNWMg.cache
+

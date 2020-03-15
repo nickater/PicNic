@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { User } from './models/user';
 import { AuthService } from './shared/services/auth.service';
-import { Router } from '@angular/router';
 import { GroupDALService } from './shared/services/group-dal.service';
 
 @Component({
@@ -12,10 +9,9 @@ import { GroupDALService } from './shared/services/group-dal.service';
 })
 export class AppComponent {
   title = 'AngPicNicV2';
-  groupId$: Observable<string>;
-  constructor(
-    public auth: AuthService,
-    private router: Router,
-    public groupService: GroupDALService
-  ) {}
+  constructor(public auth: AuthService, public groupService: GroupDALService) {
+    if (!this.groupService.groupId) {
+      this.groupService.groupId = sessionStorage.getItem('groupId');
+    }
+  }
 }

@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  width: 100%;
+  text-align: center;
+}
+
+mat-card {
+  width: 100%;
+}
+
+mat-form-field {
+  padding-top: 10px;
+  height: auto;
+}
+
+.top {
+  background-color: whitesmoke;
+}
+
+.bottom {
+  background-color: whitesmoke;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+mat-toolbar {
+  justify-content: space-around;
+}

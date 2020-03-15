@@ -1,0 +1,54 @@
+<div *ngIf="this.event$ | async as currentEvent; else loading" class="container">
+  <mat-card *ngIf="addFoodToEventForm">
+    <mat-card-title>{{ currentEvent.name }} </mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="addFoodToEventForm" (ngSubmit)="onSubmit()">
+        <mat-tab-group class="top" formArrayName="days">
+          <mat-tab label="Day {{ i + 1 }}" *ngFor="let day of mealArray.controls; let i = index">
+            <mat-tab-group class="bottom" [formGroupName]="i">
+              <mat-tab label="{{ meals[0] | titlecase }}">
+                <input style="display: none;" formControlName="dayNumber" value="i" />
+                <mat-form-field *ngIf="food$ | async as foodEl">
+                  <mat-label>Selections</mat-label>
+                  <mat-select formControlName="breakfast" multiple>
+                    <mat-option *ngFor="let item of foodEl" [value]="{id: item.id, name: item.name}">
+                      {{ item.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-tab>
+              <mat-tab label="{{ meals[1] | titlecase }}">
+                <mat-form-field *ngIf="food$ | async as foodEl">
+                  <mat-label>Selections</mat-label>
+                  <mat-select formControlName="lunch" multiple>
+                    <mat-option *ngFor="let item of foodEl" [value]="{id: item.id, name: item.name}">{{ 
+                  item.name
+                }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-tab>
+              <mat-tab label="{{ meals[2] | titlecase }}">
+                <mat-form-field *ngIf="food$ | async as foodEl">
+                  <mat-label>Selections</mat-label>
+                  <mat-select formControlName="dinner" multiple>
+                    <mat-option *ngFor="let item of foodEl" [value]="{id: item.id, name: item.name}">{{
+                  item.name
+                }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-tab>
+        </mat-tab-group>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit">SAVE</button>
+          <button mat-raised-button color="warn" type="button" (click)="onCancel()">CANCEL</button>
+        </mat-card-actions>
+      </form>
+      <ng-template class="loading" #loading>
+        <div class="spinner-container">
+          <mat-spinner></mat-spinner>
+        </div>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>

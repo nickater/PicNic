@@ -1,31 +1,6 @@
 .container {
+  background-color: rgba(240, 248, 255, 0.9);
   height: auto;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  top: 8em;
-  margin: 20px;
-}
-
-mat-card-header {
-  display: flex;
-  justify-content: space-around;
-}
-.card {
-  height: 100%;
-  max-width: 400px;
-}
-
-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-}
-
-mat-form-field {
-  width: 100%;
-}
-mat-card-actions {
-  display: flex;
-  justify-content: space-evenly;
+  overflow: hidden;
+  padding-top: 0;
 }

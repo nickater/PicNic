@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
+import { UserModel } from 'src/app/models/user';
 import { Group } from 'src/app/models/group';
 
 @Injectable({
@@ -11,35 +9,62 @@ import { Group } from 'src/app/models/group';
 })
 export class GroupDALService {
   group: Observable<any>;
+  localGroupId: string;
+  groupId: string;
+
   constructor(public afs: AngularFirestore) {}
 
   storeGroupId(groupId: string) {
-    localStorage.setItem('groupId', groupId);
-    this.group = this.getGroupById(this.groupId);
+    sessionStorage.setItem('groupId', groupId);
   }
 
-  getGroupById(groupId: string): Observable<any> {
-    console.log(groupId);
+  getGroupById(groupId: string): Observable<UserModel[]> {
     return this.afs
       .collection('groups')
       .doc(groupId)
-      .collection('users', (ref) => ref.orderBy('birthday', 'asc'))
+      .collection<UserModel>('users', (ref) => ref.orderBy('birthday', 'asc'))
       .valueChanges();
   }
 
-  addNewGroup(groupId: string) {
-    this.afs.collection('groups').doc(groupId);
+  addNewGroup(groupId: string, password: string) {
+    this.afs
+      .collection('groups')
+      .doc(groupId)
+      .set({
+        password: password
+      });
   }
 
-  get groupId(): string {
-    return localStorage.getItem('groupId');
+  doesGroupExist(groupId: string): Promise<boolean> {
+    const groupRef = this.afs.collection('groups').doc(groupId);
+    return groupRef
+      .get()
+      .toPromise()
+      .then((doc) => {
+        return doc.exists;
+      });
   }
 
-  set groupId(groupId: string) {
-    localStorage.setItem('groupId', groupId);
+  doesGroupPasswordMatch(groupId, groupPassword) {
+    let passwordMatches = false;
+    const groupRef = this.afs.collection('groups').doc(groupId);
+    debugger;
+    return groupRef
+      .get()
+      .toPromise()
+      .then((doc) => {
+        const password = doc.get('password');
+        if (groupPassword === password) {
+          return true;
+        } else {
+          return false;
+        }
+      });
   }
 
   deleteGroupId() {
-    localStorage.removeItem('groupId');
+    this.groupId = undefined;
+    sessionStorage.removeItem('groupId');
+    sessionStorage.removeItem('isLoggedIn');
   }
 }

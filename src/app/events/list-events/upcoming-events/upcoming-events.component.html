@@ -1,0 +1,45 @@
+<div class="container" *ngIf="upcomingEvents | async as events; else loading">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let event of events">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ event.name | titlecase }}
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ event.startDate.toDate() | date }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="expanded-panel">
+        <div class="food">
+          <button mat-raised-button color="primary" class="event-food" (click)="navigateToDetails(event.id)">See Event
+            Details</button>
+        </div>
+        <div class="edit">
+          <button mat-raised-button color="primary">
+            Update Event
+          </button>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <button class="add" mat-raised-button color="accent">
+    <i routerLink="create" class="material-icons">
+      add
+    </i>
+  </button>
+</div>
+<ng-template #loading>
+  <div class="spinner-container" *ngIf="stillLoading; else notLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <ng-template class="spinner-container" #notLoading>
+    <div class="spinner-container">
+      <h2>Sorry, no events!</h2>
+    </div>
+  </ng-template>
+  <button class="add" mat-raised-button color="accent">
+    <i routerLink="create" class="material-icons">
+      add
+    </i>
+  </button>
+</ng-template>

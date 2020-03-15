@@ -1,31 +1,47 @@
-<div class="container" *ngIf="foodCount > 0; else noFood">
+<div class="container" *ngIf="food$ | async as food; else loading">
   <mat-accordion>
     <mat-expansion-panel *ngFor="let item of food">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{ item.name | titlecase }}
         </mat-panel-title>
-        <mat-panel-description>
+        <mat-panel-description *ngIf="item.lastUsed; else neverUsed">
           Last Cooked: {{ item.lastUsed.toDate() | date }}
         </mat-panel-description>
+        <ng-template #neverUsed>
+          <mat-panel-description>
+            Last Cooked: Never
+          </mat-panel-description>
+        </ng-template>
       </mat-expansion-panel-header>
       <div class="expanded-panel">
         <mat-list>
-          <mat-list-item *ngFor="let ing of item.ingredients">
-            {{ ing.quantity }} {{ ing.unit }} of {{ ing.name }}
+          <mat-list-item class="item" *ngFor="let ing of item.ingredients">
+            <div *ngIf="ing.quantity < 2; else plural">
+              {{ ing.quantity }} {{ ing.unit }} of {{ ing.name | lowercase}}
+            </div>
+            <ng-template #plural>
+              {{ ing.quantity }} {{ ing.unit }}s of {{ ing.name | lowercase}}
+            </ng-template>
+            <mat-divider></mat-divider>
           </mat-list-item>
         </mat-list>
       </div>
+      <div class="edit">
+        <button mat-mini-fab (click)="editFoodOpen(item)">
+          <i class="material-icons">
+            edit
+          </i>
+        </button>
+      </div>
     </mat-expansion-panel>
   </mat-accordion>
-  <button mat-button (click)="openAddFoodModal()">
-    <i class="material-icons">
-      add
-    </i>
-  </button>
 </div>
-<ng-template #noFood>
-  <mat-toolbar>
-    There's no food here!
-  </mat-toolbar>
+<ng-template #loading>
+  <app-waiting [statement]="statement" [stillLoading]="stillLoading"></app-waiting>
 </ng-template>
+<button class="add" mat-raised-button color="accent" (click)="goToAddFoodComponent()">
+  <i class="material-icons">
+    add
+  </i>
+</button>

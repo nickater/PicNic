@@ -1,0 +1,13 @@
+<div class="container" *ngIf="event$ | async as event; else loading">
+
+  <mat-toolbar>{{event.name}}</mat-toolbar>
+  <mat-toolbar>{{ event.startDate.toDate() | date }}</mat-toolbar>
+  <mat-card>
+    {{event | json}}
+  </mat-card>
+</div>
+<ng-template #loading>
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

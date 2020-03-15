@@ -1,13 +1,20 @@
 import { Timestamp } from 'rxjs/internal/operators/timestamp';
 
-export interface User {
+export interface UserModel {
   id: string;
   groupId: string;
   firstName: string;
   lastName: string;
+  displayName?: string;
   email: string;
-  password: string;
-  birthday: number;
-  portion: number;
-  eventsAttended: number;
+  photoUrl?: string;
+  password?: string;
+  birthday?: any;
+  portion?: number;
+  bio?: string;
+  eventsAttended?: number;
+  recipesContributed?: number;
+  isAdmin?: boolean;
+  hasCompletedProfile?: boolean;
+  accountCreatedOn: Date;
 }

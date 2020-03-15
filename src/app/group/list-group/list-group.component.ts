@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupDALService } from 'src/app/shared/services/group-dal.service';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/models/user';
+import { UserModel } from 'src/app/models/user';
 
 @Component({
   selector: 'app-list-group',
@@ -10,16 +10,15 @@ import { User } from 'src/app/models/user';
 })
 export class ListGroupComponent implements OnInit {
   panelOpenState = false;
-  group: User[];
-
+  group$: Observable<UserModel[]>;
+  stillLoading = true;
+  statement = 'No one found!';
   constructor(public groupService: GroupDALService) {}
 
   ngOnInit() {
-    this.groupService
-      .getGroupById(this.groupService.groupId)
-      .subscribe((res) => {
-        console.log(res);
-        this.group = res;
-      });
+    setTimeout(() => {
+      this.stillLoading = false;
+    }, 4000);
+    this.group$ = this.groupService.getGroupById(this.groupService.groupId);
   }
 }

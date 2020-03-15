@@ -3,8 +3,8 @@ import { Ingredient } from './ingredient';
 export interface Food {
   id: string;
   name: string;
+  lastUsed: any;
   ingredients: Ingredient[];
   addedBy?: string;
-  dateAdded?: number | Date;
-  lastUsed?: number;
+  description?: string;
 }

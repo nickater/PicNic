@@ -11,14 +11,19 @@ import { AngularFirebaseModule } from './shared/angular-fire.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
-
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+import { InitialFormComponent } from './home/initial-form/initial-form.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { SharedComponentsModule } from './shared/shared-components.module';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     UserLoginComponent,
     UserRegistrationComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    InitialFormComponent
   ],
   imports: [
     CommonModule,
@@ -26,10 +31,33 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    SharedComponentsModule,
     AngularFirebaseModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxAuthFirebaseUIModule.forRoot(
+      environment.firebaseConfig,
+      () => 'your_app_name_factory',
+      {
+        enableFirestoreSync: false, // enable/disable autosync users with firestore
+        toastMessageOnAuthSuccess: false, // whether to open/show a snackbar message on auth success - default : true
+        toastMessageOnAuthError: false, // whether to open/show a snackbar message on auth error - default : true
+        authGuardFallbackURL: '/login', // url for unauthenticated users - to use in combination with canActivate feature on a route
+        authGuardLoggedInURL: '/groups', // url for authenticated users - to use in combination with canActivate feature on a route
+        passwordMaxLength: 60, // `min/max` input parameters in components should be within this range.
+        passwordMinLength: 8, // Password length min/max in forms independently of each componenet min/max.
+        // Same as password but for the name
+        nameMaxLength: 50,
+        nameMinLength: 2,
+        // If set, sign-in/up form is not available until email has been verified.
+        // Plus protected routes are still protected even though user is connected.
+        guardProtectedRoutesUntilEmailIsVerified: true,
+        enableEmailVerification: true // default: true
+      }
+    ),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
+    })
   ],
-  providers: [],
   bootstrap: [AppComponent],
   entryComponents: []
 })

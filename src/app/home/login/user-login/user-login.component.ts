@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { UserDalService } from 'src/app/shared/services/user-dal.service';
+import { UserDalService } from 'src/app/shared/services/user-services/user-dal.service';
 import { GroupDALService } from 'src/app/shared/services/group-dal.service';
 import { Router } from '@angular/router';
+import { AuthProvider } from 'ngx-auth-firebaseui';
+import { MatDialog } from '@angular/material';
+import { ErrorPromptComponent } from '../error-prompt/error-prompt.component';
+import { UserModel } from 'src/app/models/user';
 
 @Component({
   selector: 'app-user-login',
@@ -12,35 +16,46 @@ import { Router } from '@angular/router';
 })
 export class UserLoginComponent implements OnInit {
   loginForm: FormGroup;
+  providers = AuthProvider;
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
     private userService: UserDalService,
     private groupService: GroupDALService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
-  ngOnInit() {
-    this.loginForm = this.fb.group({
-      email: '',
-      password: ''
-    });
+  ngOnInit() {}
+
+  onSubmit(user: Partial<UserModel>) {
+    try {
+      this.userService.retrieveGroupIdByEmail(user).subscribe((res: any) => {
+        if (this.groupService.doesGroupExist(res.groupId)) {
+          this.router.navigate(['group']).then(() => {
+            this.groupService.groupId = res.groupId;
+            this.groupService.storeGroupId(res.groupId);
+          });
+        } else {
+          this.router.navigate(['initialForm']);
+          this.userService.mapToUser(user);
+        }
+        sessionStorage.setItem('isLoggedIn', 'true');
+      });
+    } catch (err) {
+      console.error('userLogin - onSubmit - ', err);
+    }
   }
 
-  async onSubmit() {
-    await this.authService.emailLogin(this.loginForm.value).then((cred) => {
-      this.userService
-        .retrieveGroupIdByEmail(cred.user.email)
-        .subscribe((res: any) => {
-          this.groupService.groupId = res.groupId;
-          this.router.navigate(['group']);
-        });
-    });
+  errorUserPrompt(event) {
+    this.dialog.open(ErrorPromptComponent);
   }
 
   onCancel() {
     this.loginForm.reset();
     this.router.navigate(['/']);
+  }
+
+  goToRegistration() {
+    this.router.navigate(['register']);
   }
 }

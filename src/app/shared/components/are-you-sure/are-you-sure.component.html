@@ -1,0 +1,15 @@
+<div class="container">
+  <div>
+    <mat-card-title class="title">
+      Are You Sure?
+    </mat-card-title>
+    <hr />
+    <mat-card-subtitle class="title">Your {{ subject }} will be lost forever!</mat-card-subtitle>
+    <mat-dialog-actions>
+      <button mat-raised-button color="warn" (click)="imSure()">
+        Sure
+      </button>
+      <button mat-raised-button color="primary" (click)="cancel()">Cancel</button>
+    </mat-dialog-actions>
+  </div>
+</div>
