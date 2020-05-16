@@ -23,7 +23,7 @@ import { SharedComponentsModule } from './shared/shared-components.module';
     UserLoginComponent,
     UserRegistrationComponent,
     UserProfileComponent,
-    InitialFormComponent
+    InitialFormComponent,
   ],
   imports: [
     CommonModule,
@@ -51,14 +51,14 @@ import { SharedComponentsModule } from './shared/shared-components.module';
         // If set, sign-in/up form is not available until email has been verified.
         // Plus protected routes are still protected even though user is connected.
         guardProtectedRoutesUntilEmailIsVerified: true,
-        enableEmailVerification: true // default: true
+        enableEmailVerification: true, // default: true
       }
     ),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production
-    })
+      enabled: environment.production,
+    }),
   ],
   bootstrap: [AppComponent],
-  entryComponents: []
+  entryComponents: [],
 })
 export class AppModule {}
