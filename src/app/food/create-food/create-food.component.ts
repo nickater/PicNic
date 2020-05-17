@@ -4,19 +4,18 @@ import { Measurement } from '../../models/measurement';
 import {
   MatDialog,
   MatDialogConfig,
-  MAT_SELECT_SCROLL_STRATEGY
+  MAT_SELECT_SCROLL_STRATEGY,
 } from '@angular/material';
 import { FoodDALService } from 'src/app/shared/services/food-dal.service';
 import { MeasurementDalService } from 'src/app/shared/services/measurement-dal.service';
 import { Router } from '@angular/router';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, pipe, from, of } from 'rxjs';
 import { AreYouSureComponent } from 'src/app/shared/components/are-you-sure/are-you-sure.component';
 import { CreateMeasurementComponent } from '../measurement/create-measurement/create-measurement.component';
 import { Overlay, BlockScrollStrategy } from '@angular/cdk/overlay';
 import { IngredientChoice } from 'src/app/models/ingredient';
 import { IngredientDalService } from 'src/app/shared/services/ingredient-dal.service';
 import { startWith, map, filter } from 'rxjs/operators';
-import { isNumber } from 'util';
 
 export function scrollFactory(overlay: Overlay): () => BlockScrollStrategy {
   return () => overlay.scrollStrategies.block();
@@ -30,16 +29,18 @@ export function scrollFactory(overlay: Overlay): () => BlockScrollStrategy {
     {
       provide: MAT_SELECT_SCROLL_STRATEGY,
       useFactory: scrollFactory,
-      deps: [Overlay]
-    }
-  ]
+      deps: [Overlay],
+    },
+  ],
 })
 export class CreateFoodComponent implements OnInit {
   addFoodForm: FormGroup;
   measurements$: Observable<Measurement[]>;
-  filteredOptions: Observable<IngredientChoice[]>;
+  _unfilteredIngredients = new ReplaySubject<IngredientChoice[]>();
   measurementSub$ = new ReplaySubject<Measurement[]>();
   ingredients: IngredientChoice[];
+  ingredientCount = 0;
+
   constructor(
     private foodService: FoodDALService,
     private fb: FormBuilder,
@@ -50,21 +51,21 @@ export class CreateFoodComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.setIngredients();
+    this.measurementService.combineMeasurements().subscribe((res) => {
+      this.measurementSub$.next(res);
+    });
+    this.setUpCreateFoodFormGroup();
+  }
+
+  setUpCreateFoodFormGroup(): void {
     this.addFoodForm = this.fb.group({
       name: '',
       dateAdded: new Date(),
       lastUsed: null,
       description: '',
-      ingredients: this.fb.array([this.addIngredientGroup()])
+      ingredients: this.fb.array([this.addIngredientGroup()]),
     });
-
-    this.measurementService
-      .combineMeasurements()
-      .subscribe((res) => this.measurementSub$.next(res));
-  }
-
-  get ingredientForms() {
-    return this.addFoodForm.get('ingredients') as FormArray;
   }
 
   ingredientFormIsValid() {
@@ -72,11 +73,13 @@ export class CreateFoodComponent implements OnInit {
   }
 
   addIngredientGroup(): FormGroup {
-    return this.fb.group({
+    const formGroup = this.fb.group({
       name: '',
       quantity: [null, Validators.required],
-      unit: ''
+      unit: '',
     });
+
+    return formGroup;
   }
 
   addIngredientButtonClick(): void {
@@ -93,7 +96,7 @@ export class CreateFoodComponent implements OnInit {
     let dialogConfig = new MatDialogConfig();
     dialogConfig = {
       width: '80%',
-      height: 'auto'
+      height: 'auto',
     };
     this.dialog.open(CreateMeasurementComponent, dialogConfig);
   }
@@ -102,6 +105,7 @@ export class CreateFoodComponent implements OnInit {
     this.foodService.addNewFood(this.addFoodForm.value);
     this.router.navigate(['food']);
   }
+
   cancelHandler(touched) {
     if (touched) {
       this.openAreYouSure();
@@ -112,7 +116,7 @@ export class CreateFoodComponent implements OnInit {
 
   openAreYouSure() {
     const dialogConfig: MatDialogConfig = {
-      data: this.addFoodForm.controls.name.value || 'food'
+      data: this.addFoodForm.controls.name.value || 'food',
     };
     const dialogRef = this.dialog.open(AreYouSureComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((res) => {
@@ -120,5 +124,15 @@ export class CreateFoodComponent implements OnInit {
         this.router.navigate(['food']).then(() => this.addFoodForm.reset());
       }
     });
+  }
+
+  setIngredients() {
+    this.ingredientService.getPrivateIngredients().subscribe((res) => {
+      this._unfilteredIngredients.next(res);
+    });
+  }
+
+  get ingredientForms() {
+    return this.addFoodForm.get('ingredients') as FormArray;
   }
 }

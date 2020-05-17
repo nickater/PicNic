@@ -14,7 +14,9 @@
       <div formArrayName="ingredients" *ngFor="let ingredient of ingredientForms.controls; let i = index">
         <div>
           <div [formGroupName]="i">
-            <app-pick-ingredient [formGroupName]="i"></app-pick-ingredient>
+            <app-ingredient-choice [ingredientFormGroup]="ingredient" [unfilteredIngredients]="_unfilteredIngredients">
+            </app-ingredient-choice>
+            <i></i>
             <div>
               <mat-form-field id="quantity">
                 <input matInput placeholder="Quantity" formControlName="quantity" required />

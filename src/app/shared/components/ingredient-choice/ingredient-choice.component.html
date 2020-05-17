@@ -1,0 +1,12 @@
+<form [formGroup]="ingredientFormGroup">
+  <mat-form-field>
+    <mat-label>Ingredient Name</mat-label>
+    <input type="text" matInput formControlName="name" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-option>- Add Ingredient -</mat-option>
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

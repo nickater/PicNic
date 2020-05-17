@@ -13,8 +13,7 @@ import { CreateIngredientsComponent } from '../ingredients/create-ingredients/cr
 import { ListIngredientsComponent } from '../ingredients/list-ingredients/list-ingredients.component';
 import { UpdateIngredientsComponent } from '../ingredients/update-ingredients/update-ingredients.component';
 import { DeleteIngredientsComponent } from '../ingredients/delete-ingredients/delete-ingredients.component';
-import { PickIngredientComponent } from '../ingredients/pick-ingredient/pick-ingredient.component';
-
+import { IngredientChoiceComponent } from '../shared/components/ingredient-choice/ingredient-choice.component';
 @NgModule({
   declarations: [
     CreateFoodComponent,
@@ -27,15 +26,15 @@ import { PickIngredientComponent } from '../ingredients/pick-ingredient/pick-ing
     ListIngredientsComponent,
     UpdateIngredientsComponent,
     DeleteIngredientsComponent,
-    PickIngredientComponent
+    IngredientChoiceComponent,
   ],
   imports: [
     CommonModule,
     FoodRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    SharedComponentsModule
+    SharedComponentsModule,
   ],
-  entryComponents: [CreateMeasurementComponent]
+  entryComponents: [CreateMeasurementComponent],
 })
 export class FoodModule {}
