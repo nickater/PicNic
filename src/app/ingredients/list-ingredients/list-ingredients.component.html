@@ -2,6 +2,7 @@
   <mat-card *ngIf="ingredients$ | async as ingredients; else loading">
     <mat-card-title class="title">Ingredients</mat-card-title>
     <mat-card-content class="content">
+      <app-create-ingredients></app-create-ingredients>
       <mat-list>
         <div *ngFor="let ingredient of ingredients" class="item">
           <mat-list-item>{{ingredient.name | titlecase}}</mat-list-item>
@@ -15,7 +16,6 @@
       </mat-list>
     </mat-card-content>
     <mat-divider></mat-divider>
-    <app-create-ingredients></app-create-ingredients>
   </mat-card>
   <ng-template #loading>
     <app-waiting [stillLoading]="stillLoading"></app-waiting>
