@@ -15,8 +15,11 @@
         <div>
           <div [formGroupName]="i">
             <app-ingredient-choice [ingredientFormGroup]="ingredient" [unfilteredIngredients]="_unfilteredIngredients">
+              <ng-container *ngIf="i>0">
+                <i class="material-icons" id="delete" (click)="deleteIngredient(i)">
+                  backspace
+                </i></ng-container>
             </app-ingredient-choice>
-            <i></i>
             <div>
               <mat-form-field id="quantity">
                 <input matInput placeholder="Quantity" formControlName="quantity" required />

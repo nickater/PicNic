@@ -1,27 +1,3 @@
-<!-- <div class="container">
-  <mat-card class="card mat-elevation-z24">
-    <mat-card-header>
-      <mat-card-title class="mat-display-2">Login</mat-card-title>
-      <mat-card-subtitle></mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field>
-          <input matInput placeholder="Email Address" formControlName="email" required type="email" />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type="password" placeholder="Password" formControlName="password" required />
-        </mat-form-field>
-        <mat-card-actions>
-          <button mat-button mat-raised-button color="primary">LOGIN</button>
-          <button mat-button mat-raised-button color="warn" (click)="onCancel()">
-            CANCEL
-          </button>
-        </mat-card-actions>
-      </form>
-    </mat-card-content>
-  </mat-card>
-</div> -->
 <div class="container">
   <ngx-auth-firebaseui-login (onCreateAccountRequested)="goToRegistration()" (onSuccess)="onSubmit($event)"
     (onError)="errorUserPrompt($event)" [providers]="[providers.Google, providers.EmailAndPassword]">

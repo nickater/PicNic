@@ -43,4 +43,6 @@ export class IngredientChoiceComponent implements OnInit {
   displayFn(ingredient: IngredientChoice): string {
     return ingredient && ingredient.name ? ingredient.name : '';
   }
+
+  deleteIngredient() {}
 }

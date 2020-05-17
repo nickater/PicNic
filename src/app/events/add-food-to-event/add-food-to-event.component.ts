@@ -10,7 +10,7 @@ import { Observable, of } from 'rxjs';
 @Component({
   selector: 'app-add-food-to-event',
   templateUrl: './add-food-to-event.component.html',
-  styleUrls: ['./add-food-to-event.component.scss']
+  styleUrls: ['./add-food-to-event.component.scss'],
 })
 export class AddFoodToEventComponent implements OnInit {
   days: Array<number>;
@@ -34,7 +34,7 @@ export class AddFoodToEventComponent implements OnInit {
     this.event$ = this.eventService.getUpcomingEventById(this.eventId);
     this.food$ = this.foodService.getAllFood();
     this.addFoodToEventForm = this.fb.group({
-      days: this.fb.array([])
+      days: this.fb.array([]),
     });
     this.addAllDayGroups();
   }
@@ -56,11 +56,12 @@ export class AddFoodToEventComponent implements OnInit {
       dayNumber: index,
       breakfast: '',
       lunch: '',
-      dinner: ''
+      dinner: '',
     });
   }
 
   onSubmit() {
+    console.log(this.addFoodToEventForm);
     this.eventService.addFoodToEvent(
       this.addFoodToEventForm.value.days,
       this.eventId

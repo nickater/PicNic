@@ -3,7 +3,12 @@
   <mat-toolbar>{{event.name}}</mat-toolbar>
   <mat-toolbar>{{ event.startDate.toDate() | date }}</mat-toolbar>
   <mat-card>
-    {{event | json}}
+    <mat-list>
+      <mat-list-item>{{event.duration}}</mat-list-item>
+      <mat-list-item>{{event.startDate}}</mat-list-item>
+      <mat-list-item>{{event.endDate}}</mat-list-item>
+
+    </mat-list>
   </mat-card>
 </div>
 <ng-template #loading>
